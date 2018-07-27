@@ -1,6 +1,6 @@
 # Genetic-Cars
 
-Projeto para a disciplina de Inteligência Artificial II do curso de Ciência da Computação do IESB.
+Projeto para a disciplina Inteligência Artificial II do curso de Ciência da Computação do IESB.
 
 O objetivo é utilizar algoritmos genéticos para selecionar um indivíduo capaz de completar uma determinada pista sem bater nas paredes. Para isso, utilizaremos a engine Unity 3D e o controlador de carro do [Standard Assets](https://assetstore.unity.com/packages/essentials/asset-packs/standard-assets-32351), disponível gratuitamente na Unity Asset Store.
 
