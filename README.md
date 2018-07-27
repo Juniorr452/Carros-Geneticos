@@ -4,7 +4,9 @@ Projeto para a disciplina Inteligência Artificial II do curso de Ciência da Co
 
 O objetivo é utilizar algoritmos genéticos para selecionar um indivíduo capaz de completar uma determinada pista sem bater nas paredes. Para isso, utilizaremos a engine Unity 3D e o controlador de carro do [Standard Assets](https://assetstore.unity.com/packages/essentials/asset-packs/standard-assets-32351), disponível gratuitamente na Unity Asset Store.
 
-## Instalação
+## Primeiros Passos
+
+### Instalação
 
 * [Vá para o site da Unity](https://store.unity.com/pt), escolha uma licença e baixe a versão mais recente.
 
@@ -12,7 +14,11 @@ O objetivo é utilizar algoritmos genéticos para selecionar um indivíduo capaz
 
 * Após a instalação, abra este projeto no editor e carregue a cena do carro em SampleScenes/Scenes/Car ou CarAIWaypointBased.
 
-* Caso tenha erros de compilação, abra um (issue)[https://github.com/Juniorr452/Genetic-Cars/issues/new/choose] e mostre os erros que estão aparecendo.
+* Caso tenha erros de compilação, abra uma [issue](https://github.com/Juniorr452/Genetic-Cars/issues/new/choose) e mostre os erros que estão aparecendo.
+
+### Começando com a Unity
+
+Se você não tiver experiência com a Unity, eu recomendo começar por esta [série de tutoriais](https://www.youtube.com/watch?v=IlKaB1etrik&index=2&list=PLPV2KyIb3jR53Jce9hP7G5xC4O9AgnOuL) e o [tutorial de raycasts](https://www.youtube.com/watch?v=THnivyG0Mvo) do Brackeys.
 
 ## Licença 
 
