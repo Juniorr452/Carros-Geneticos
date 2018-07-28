@@ -41,6 +41,7 @@ public class SensoresCarro : MonoBehaviour
 			distanciaSensores[i] = tamanhoRaycast;
 			if (Physics.Raycast(posInicialRaycast, direcao, out hit, tamanhoRaycast))
 			{
+				//TODO: Verificar se o alvo atingido é uma parede
 				distanciaSensores[i] = hit.distance;
 
 				if(desenharRaycast)

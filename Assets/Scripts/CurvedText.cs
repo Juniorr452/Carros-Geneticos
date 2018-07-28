@@ -90,8 +90,12 @@ public class CurvedText : BaseMeshEffect
 	
 	protected override void OnRectTransformDimensionsChange ()
 	{
-			var tmpRect = curveForText [curveForText.length - 1];
-			tmpRect.time = rectTrans.rect.width;
-			curveForText.MoveKey (curveForText.length - 1, tmpRect);
+		if(rectTrans == null)
+			return;
+			
+		var tmpRect = curveForText [curveForText.length - 1];
+
+		tmpRect.time = rectTrans.rect.width;
+		curveForText.MoveKey (curveForText.length - 1, tmpRect);
 	}
 }
