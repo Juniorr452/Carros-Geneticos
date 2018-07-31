@@ -44,9 +44,8 @@ public class UICarro : MonoBehaviour
 		sbInfoCarro.Append(carController.CurrentSpeed.ToString("0.0"));
 		sbInfoCarro.AppendLine(" mph");
 
-		sbInfoCarro.Append("Fit: ");
-		// TODO: Colocar a distância percorrida ou algo do tipo aqui
-		sbInfoCarro.Append(0);
+		sbInfoCarro.Append("Dist: ");
+		sbInfoCarro.Append(sensoresCarro.distanciaPercorrida.ToString("0.0"));
 
 		// Atualizar a UI
 		sensoresCarroText.text = sbSensoresCarro.ToString();
