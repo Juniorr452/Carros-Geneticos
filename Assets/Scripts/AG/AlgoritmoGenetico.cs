@@ -1,10 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
 public class AlgoritmoGenetico : MonoBehaviour 
 {
+	[SerializeField]
+	private int geracaoAtual = 1;
+	private float fatorMutacao = 0.05f;
+
 	List<Individuo> populacao;
 
 	[Range(1, 1000)]
@@ -26,8 +31,10 @@ public class AlgoritmoGenetico : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update () 
+	{
+		if(Input.GetButtonDown("Jump"))
+			GerarProximaGeracao();
 	}
 
 	void inicializarPopulacao()
@@ -41,8 +48,26 @@ public class AlgoritmoGenetico : MonoBehaviour
 		}
 	}
 
-	// TODO: Seleção
-	void Selecao()
+	public void GerarProximaGeracao()
+	{
+		// TODO:
+		
+		Selecao();
+		CrossOver();
+		Mutacao(fatorMutacao);
+		ReposicionarCarros();
+
+		geracaoAtual++;
+	}
+
+    private void ReposicionarCarros()
+    {
+        foreach(Individuo individuo in populacao)
+			individuo.Reposicionar(posicaoSpawn);
+    }
+
+    // TODO: Seleção
+    void Selecao()
 	{
 
 	}
@@ -69,11 +94,11 @@ public class AlgoritmoGenetico : MonoBehaviour
 	{
 		Transform carro = Instantiate(carroPrefab, 
 			posicaoSpawn.position, 
-			Quaternion.identity);
+			posicaoSpawn.rotation);
 
 		CinemachineVirtualCamera camera = Instantiate(cameraPrefab, 
 			posicaoSpawn.position, 
-			Quaternion.identity);
+			posicaoSpawn.rotation);
 
 		camera.m_Follow = carro;
 		camera.m_LookAt = carro;
