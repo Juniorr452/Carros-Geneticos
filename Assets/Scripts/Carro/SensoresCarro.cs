@@ -15,18 +15,12 @@ public class SensoresCarro : MonoBehaviour
 	public float tamanhoRaycast  = 75f;
 	public bool  desenharRaycast = true;
 
-	// Distância percorrida
-	public  float   distanciaPercorrida = 0;
-	private Vector3 posicaoAnterior;
-
 	// Start is called on the frame when a script is enabled just before
 	// any of the Update methods is called the first time.
 	void Start()
 	{
 		distanciaSensores = new float[qtdSensores];
 		direcaoSensores   = new Vector3[qtdSensores];
-
-		posicaoAnterior = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -34,7 +28,6 @@ public class SensoresCarro : MonoBehaviour
 	{
 		AtualizarDirecaoSensores();
 		AtualizarDistanciaSensores();
-		AtualizarDistanciaPercorrida();
 	}
 
     private void AtualizarDistanciaSensores()
@@ -70,29 +63,5 @@ public class SensoresCarro : MonoBehaviour
 		direcaoSensores[3] = Quaternion.AngleAxis(45, transform.up) * transform.forward;
 		// Direita
 		direcaoSensores[4] = transform.right;
-
-		/*direcaoSensores = new Vector3[]{
-			-transform.right,
-			Quaternion.AngleAxis(-45, transform.up) * transform.forward,
-			transform.forward,
-			Quaternion.AngleAxis(45, transform.up) * transform.forward,
-			transform.right
-		};*/
-    }
-
-	// Calcula o quanto o carro andou de um ponto a outro e soma
-	// com a distância percorrida.
-	private void AtualizarDistanciaPercorrida()
-    {
-		Vector3 posicaoAtual = transform.position;
-
-		float distanciaCalculada = (posicaoAtual - posicaoAnterior).magnitude;
-
-		posicaoAnterior = posicaoAtual;
-
-		// Pra impedir que pequenas variações no movimento
-		// não sejam levadas em consideração.
-		if(distanciaCalculada > 0.01f)
-        	distanciaPercorrida += distanciaCalculada;
     }
 }

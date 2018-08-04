@@ -13,14 +13,16 @@ public class UICarro : MonoBehaviour
 	public Text infoCarroText;
 	public Text sensoresCarroText;
 	
-	private CarController carController;
-	private SensoresCarro sensoresCarro;
+	private CarController       carController;
+	private SensoresCarro       sensoresCarro;
+	private DistanciaPercorrida distanciaCarro;
 
 	// Use this for initialization
 	void Start () 
 	{
-		carController = GetComponent<CarController>();
-		sensoresCarro = GetComponent<SensoresCarro>();
+		distanciaCarro = GetComponent<DistanciaPercorrida>();
+		carController  = GetComponent<CarController>();
+		sensoresCarro  = GetComponent<SensoresCarro>();
 	}	
 	
 	// Update is called once per frame
@@ -45,7 +47,7 @@ public class UICarro : MonoBehaviour
 		sbInfoCarro.AppendLine(" mph");
 
 		sbInfoCarro.Append("Dist: ");
-		sbInfoCarro.Append(sensoresCarro.distanciaPercorrida.ToString("0.0"));
+		sbInfoCarro.Append(distanciaCarro.getDistanciaPercorrida().ToString("0.0"));
 
 		// Atualizar a UI
 		sensoresCarroText.text = sbSensoresCarro.ToString();

@@ -17,12 +17,15 @@ public class Individuo : MonoBehaviour
 	private string nome;
 	public  Cromossomo cromossomo;
 
-	private CarController controladorCarro;
-	private SensoresCarro sensoresCarro;
+	private DistanciaPercorrida distanciaCarro;
+	private CarController       controladorCarro;
+	private SensoresCarro       sensoresCarro;
 
 	// Use this for initialization
 	void Start () {
 		controladorCarro = GetComponent<CarController>();
+		distanciaCarro   = GetComponent<DistanciaPercorrida>();
+		sensoresCarro    = GetComponent<SensoresCarro>();
 	}
 	
 	// Update is called once per frame
@@ -39,15 +42,17 @@ public class Individuo : MonoBehaviour
 		transform.position = posicao.position;
 		transform.rotation = posicao.rotation;
 
+		distanciaCarro.ResetarDistancia(posicao.position);
+
 		gameObject.SetActive(true);
     }
 
-	public void novoIndividuo(String nome, Cromossomo cromossomo)
+	/*public void novoIndividuo(String nome, Cromossomo cromossomo)
 	{
 		this.nome = nome;
 		this.cromossomo = cromossomo;
-		sensoresCarro.distanciaPercorrida = 0f;
-	}
+		distanciaCarro.ResetarDistancia();
+	}*/
 
     public void Morrer(){
         gameObject.SetActive(false);
