@@ -113,6 +113,29 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &58428822 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1119168972892654, guid: 28706e79144fff845bf3efcbb29a32cf,
+    type: 2}
+  m_PrefabInternal: {fileID: 1410989011}
+--- !u!114 &58428828 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114663809794134914, guid: 28706e79144fff845bf3efcbb29a32cf,
+    type: 2}
+  m_PrefabInternal: {fileID: 1410989011}
+  m_Script: {fileID: 11500000, guid: e0d511954b7f26f4f8c292f370ab6bd2, type: 3}
+--- !u!114 &58428830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 58428822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43ab30f31fbb62479f3d2d6c3780424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  individuo: {fileID: 58428828}
 --- !u!1 &113391781
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &113391782
 Transform:
   m_ObjectHideFlags: 0
@@ -220,8 +243,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 388464203}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.393404, y: -1.4647794, z: 0.9182272}
+  m_LocalRotation: {x: 0.041874766, y: -0.000010616299, z: 0.0000004498589, w: 0.99912286}
+  m_LocalPosition: {x: -1.393404, y: 0.58522034, z: -4.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 131402877}
@@ -286,7 +309,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 60.1
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -550,7 +573,7 @@ GameObject:
   - component: {fileID: 1241068401}
   m_Layer: 0
   m_Name: GroundTrackVerges (1)
-  m_TagString: Untagged
+  m_TagString: Parede
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967294
@@ -696,7 +719,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 65554313657090388, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65097111905836706, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 
@@ -708,7 +731,7 @@ Prefab:
       value: 
       objectReference: {fileID: 13400000, guid: 67db31eead11e8d6d00011d98d76c639,
         type: 2}
-    - target: {fileID: 65097111905836706, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65554313657090388, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 
@@ -716,9 +739,20 @@ Prefab:
         type: 2}
     - target: {fileID: 1119168972892654, guid: 28706e79144fff845bf3efcbb29a32cf, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822808512136848, guid: 28706e79144fff845bf3efcbb29a32cf,
+        type: 2}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114032616205124510, guid: 28706e79144fff845bf3efcbb29a32cf,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114809827320845910, guid: 28706e79144fff845bf3efcbb29a32cf, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 28706e79144fff845bf3efcbb29a32cf, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1001 &1436983321

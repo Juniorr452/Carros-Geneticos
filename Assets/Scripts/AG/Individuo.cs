@@ -38,6 +38,8 @@ public class Individuo : MonoBehaviour
 
 		transform.position = posicao.position;
 		transform.rotation = posicao.rotation;
+
+		gameObject.SetActive(true);
     }
 
 	public void novoIndividuo(String nome, Cromossomo cromossomo)
@@ -46,4 +48,8 @@ public class Individuo : MonoBehaviour
 		this.cromossomo = cromossomo;
 		sensoresCarro.distanciaPercorrida = 0f;
 	}
+
+    public void Morrer(){
+        gameObject.SetActive(false);
+    }
 }

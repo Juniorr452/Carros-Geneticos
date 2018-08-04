@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 114032616205124510}
   - component: {fileID: 114982293966898574}
   - component: {fileID: 114126145139115814}
+  - component: {fileID: 114200967662601146}
   m_Layer: 9
   m_Name: Carro
   m_TagString: Player
@@ -2332,6 +2333,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheel: {fileID: 1019217626899384}
+--- !u!114 &114200967662601146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1119168972892654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43ab30f31fbb62479f3d2d6c3780424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  individuo: {fileID: 114663809794134914}
 --- !u!114 &114250663833798786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2465,7 +2478,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d511954b7f26f4f8c292f370ab6bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gene: {fileID: 0}
 --- !u!114 &114727956135496878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2584,6 +2596,7 @@ MonoBehaviour:
   offsetRaycast: {x: 0, y: 0.2, z: 0}
   tamanhoRaycast: 75
   desenharRaycast: 1
+  distanciaPercorrida: 0
 --- !u!146 &146349379639031312
 WheelCollider:
   m_ObjectHideFlags: 1
