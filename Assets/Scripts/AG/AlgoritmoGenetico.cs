@@ -43,10 +43,12 @@ public class AlgoritmoGenetico : MonoBehaviour
 	public CinemachineVirtualCamera cameraPrefab;
 
 	// Cores dos carros em primeiro, segundo e outros lugares
+
+
 	public Color[] coresPosicoes = {
 		new Color(.8113208f, .5610197f, 0, 1),
 		new Color(.1585792f, .5660378f, 0, 1),
-		new Color(.764151f, .764151f, .764151f, 1)
+		new Color(.764151f, .764151f, .764151f, 1),
 	};
 
 	// Use this for initialization
@@ -144,6 +146,10 @@ public class AlgoritmoGenetico : MonoBehaviour
 		}
 
 		individuosMortos = 0;
+
+		Camera camera = FindObjectOfType<Camera>();
+		camera.transform.position = posicaoSpawn.position;
+		camera.transform.rotation = posicaoSpawn.rotation;
     }
 
 	public void MatarIndividuo(Individuo individuo)
@@ -166,15 +172,15 @@ public class AlgoritmoGenetico : MonoBehaviour
 			// Pegar as cores do primeiro, segundo e outras
 			// posições, se houverem.
 			int tamanhoCores = coresPosicoes.Length - 1;
-			int index        = i <= tamanhoCores ? i : tamanhoCores;
+			int indexCor     = i < tamanhoCores ? i : tamanhoCores;
 
-			Individuo individuo = populacao[index];
+			Individuo individuo = populacao[i];
 
 			// Setar a cor do carro e a prioridade da
 			// câmera (Para que possamos acompanhar ele)
 			// de acordo com a posição.
-			individuo.carroRenderer.material.color = coresPosicoes[index];
-			individuo.cameraCinemachine.Priority   = i == 0 ? 11 : 10;
+			individuo.carroRenderer.material.color = coresPosicoes[indexCor];
+			individuo.cameraCinemachine.Priority   = i == 0 && !individuo.morto ? 1 : 0;
 		}
     }
 }
