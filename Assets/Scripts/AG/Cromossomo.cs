@@ -8,6 +8,10 @@ public class Cromossomo
 	public BitArray[] genes;
 
 	private const int qtdBits = 8;
+
+	public Cromossomo(BitArray[] genesCodificados){
+		this.genes = genesCodificados;
+	}
 	
 	public Cromossomo(int qtdGenes, float[][] limitesInfSup)
 	{
@@ -44,7 +48,7 @@ public class Cromossomo
 	}
 
 	// https://stackoverflow.com/questions/45759398/byte-to-bitarray-and-back-to-byte
-	private byte ConverterBitArrayParaByte(BitArray bits)
+	public byte ConverterBitArrayParaByte(BitArray bits)
 	{
 		var bytes = new byte[1];
     	bits.CopyTo(bytes, 0);

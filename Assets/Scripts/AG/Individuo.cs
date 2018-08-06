@@ -40,6 +40,12 @@ public class Individuo : MonoBehaviour
 		Mover();
 	}
 
+	public void Setar(String nome, Cromossomo cromossomo)
+	{
+		this.nome = nome;
+		this.cromossomo = cromossomo;
+	}
+
     private void Mover()
     {
         float horizontal = 0f;

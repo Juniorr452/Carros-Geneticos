@@ -92,6 +92,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 		Selecao();
 		CrossOver();
 		Mutacao(fatorMutacao);
+		Elitismo();
 		RespawnarCarros();
 
 		geracaoAtual++;
@@ -115,7 +116,45 @@ public class AlgoritmoGenetico : MonoBehaviour
 	// TODO: CrossOver
 	void CrossOver()
 	{
+		// Selecionando só 2 por enquanto...
+		Cromossomo cromossomo1 = individuosSelecionados[0].cromossomo;
+		Cromossomo cromossomo2 = individuosSelecionados[1].cromossomo;
 
+		for(int i = 0; i < populacao.Count; i++)
+		{
+			Individuo individuo = populacao[i];
+			BitArray[] genesCrossover = new BitArray[qtdGenes];
+
+			Debug.Log(individuo.nome + ": " + individuo.cromossomo.ConverterBitArrayParaByte(individuo.cromossomo.genes[0]));
+
+			for(int j = 0; j < qtdGenes; j++)
+			{
+				BitArray gene1 = cromossomo1.genes[j];
+				BitArray gene2 = cromossomo2.genes[j];
+
+				BitArray geneCrossover = new BitArray(8);
+
+				for(int k = 0; k < gene1.Count; k++)
+				{
+					bool bitEscolhido;
+
+					if(UnityEngine.Random.Range(0, 1) == 0)
+						bitEscolhido = gene1[k];
+					else
+						bitEscolhido = gene2[k];
+
+					geneCrossover[k] = bitEscolhido;
+				}
+
+				genesCrossover[j] = geneCrossover;
+			}
+
+			qtdIndividuosGerados++;
+			Cromossomo cromossomoCrossover = new Cromossomo(genesCrossover);
+			individuo.Setar("Individuo_" + qtdIndividuosGerados, cromossomoCrossover);
+
+			Debug.Log(individuo.nome + ": " + individuo.cromossomo.ConverterBitArrayParaByte(individuo.cromossomo.genes[0]));
+		}
 	}
 
 	// TODO: Mutação
@@ -128,7 +167,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 			foreach(BitArray gene in individuo.cromossomo.genes)
 				for(int j = 0; j < gene.Count; j++)
 				{
-					float random = UnityEngine.Random.Range(0, 1);
+					float random = UnityEngine.Random.Range(0.0f, 1.0f);
 
 					// Se tiver gerado um valor dentro do fator de
 					// mutação, faz um NOT no valor do bit.
@@ -136,6 +175,12 @@ public class AlgoritmoGenetico : MonoBehaviour
 						gene[i] = !gene[i];
 				}	
 		}
+	}
+
+	void Elitismo()
+	{
+		foreach(Individuo i in individuosSelecionados)
+			populacao.Add(i);
 	}
 
 	// TODO: Parar
