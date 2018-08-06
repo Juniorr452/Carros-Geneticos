@@ -22,16 +22,14 @@ public class DistanciaPercorrida : MonoBehaviour
 	// com a distância percorrida.
 	private void AtualizarDistanciaPercorrida()
     {
+		// TODO: Talvez desconsiderar a distância vertical.
 		Vector3 posicaoAtual = transform.position;
 
 		float distanciaCalculada = (posicaoAtual - posicaoAnterior).magnitude;
 
 		posicaoAnterior = posicaoAtual;
 
-		// Pra impedir que pequenas variações no movimento
-		// não sejam levadas em consideração.
-		if(distanciaCalculada > 0.01f)
-        	distanciaPercorrida += distanciaCalculada;
+        distanciaPercorrida += distanciaCalculada;
     }
 
 	public void ResetarDistancia(Vector3 posicao)

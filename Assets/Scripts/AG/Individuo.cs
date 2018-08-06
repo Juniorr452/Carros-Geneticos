@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityStandardAssets.Vehicles.Car;
 
@@ -19,9 +20,12 @@ public class Individuo : MonoBehaviour
 
 	public bool morto = false;
 
-	private DistanciaPercorrida distanciaCarro;
+	public  DistanciaPercorrida distanciaCarro;
 	private CarController       controladorCarro;
 	private SensoresCarro       sensoresCarro;
+
+	public CinemachineVirtualCamera cameraCinemachine;
+	public Renderer carroRenderer;
 
 	// Use this for initialization
 	void Start () 
@@ -63,4 +67,12 @@ public class Individuo : MonoBehaviour
 			alg.MatarIndividuo(this);
 		}
     }
+
+	public static int OrdenarPelaDistanciaPercorrida(Individuo i1, Individuo i2) 
+	{
+		float d1 = i1.distanciaCarro.getDistanciaPercorrida();
+		float d2 = i2.distanciaCarro.getDistanciaPercorrida();
+
+    	return d2.CompareTo(d1);
+ 	}
 }

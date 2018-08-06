@@ -2493,6 +2493,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: 
+  morto: 0
+  cameraCinemachine: {fileID: 0}
+  carroRenderer: {fileID: 23047523111982670}
 --- !u!114 &114727956135496878
 MonoBehaviour:
   m_ObjectHideFlags: 1

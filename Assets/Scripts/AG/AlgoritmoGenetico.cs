@@ -12,7 +12,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 
 	List<Individuo> populacao;
 
-	[Range(1, 1000)]
+	[Range(3, 1000)]
 	public int tamanhoPopulacao = 10;
 
 	[SerializeField]
@@ -42,6 +42,13 @@ public class AlgoritmoGenetico : MonoBehaviour
 	public Transform carroPrefab;
 	public CinemachineVirtualCamera cameraPrefab;
 
+	// Cores dos carros em primeiro, segundo e outros lugares
+	public Color[] coresPosicoes = {
+		new Color(.8113208f, .5610197f, 0, 1),
+		new Color(.1585792f, .5660378f, 0, 1),
+		new Color(.764151f, .764151f, .764151f, 1)
+	};
+
 	// Use this for initialization
 	void Start () {
 		inicializarPopulacao();
@@ -50,11 +57,13 @@ public class AlgoritmoGenetico : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(Input.GetButtonDown("Jump"))
-			GerarProximaGeracao();
+		//if(Input.GetButtonDown("Jump"))
+		//	GerarProximaGeracao();
+
+		VerificarPosicoesCarro();
 	}
 
-	void inicializarPopulacao()
+    void inicializarPopulacao()
 	{
 		individuosMortos = 0;
 		populacao = new List<Individuo>(tamanhoPopulacao);
@@ -81,18 +90,6 @@ public class AlgoritmoGenetico : MonoBehaviour
 
 		geracaoAtual++;
 	}
-
-    private void RespawnarCarros()
-    {
-        foreach(Individuo individuo in populacao)
-		{
-			individuo.Reposicionar(posicaoSpawn);
-			individuo.gameObject.SetActive(true);
-			individuo.morto = false;
-		}
-
-		individuosMortos = 0;
-    }
 
     // TODO: Seleção
     void Selecao()
@@ -131,8 +128,23 @@ public class AlgoritmoGenetico : MonoBehaviour
 		camera.m_Follow = carro;
 		camera.m_LookAt = carro;
 
+		Individuo individuo         = carro.GetComponent<Individuo>();
+		individuo.cameraCinemachine = camera;
+
 		return carro.GetComponent<Individuo>();
 	}
+
+	private void RespawnarCarros()
+    {
+        foreach(Individuo individuo in populacao)
+		{
+			individuo.Reposicionar(posicaoSpawn);
+			individuo.gameObject.SetActive(true);
+			individuo.morto = false;
+		}
+
+		individuosMortos = 0;
+    }
 
 	public void MatarIndividuo(Individuo individuo)
 	{
@@ -144,4 +156,25 @@ public class AlgoritmoGenetico : MonoBehaviour
 		if(individuosMortos == tamanhoPopulacao)
 			GerarProximaGeracao();
 	}
+
+	private void VerificarPosicoesCarro()
+    {
+        populacao.Sort(Individuo.OrdenarPelaDistanciaPercorrida);
+
+		for(int i = 0; i < populacao.Count; i++)
+		{
+			// Pegar as cores do primeiro, segundo e outras
+			// posições, se houverem.
+			int tamanhoCores = coresPosicoes.Length - 1;
+			int index        = i <= tamanhoCores ? i : tamanhoCores;
+
+			Individuo individuo = populacao[index];
+
+			// Setar a cor do carro e a prioridade da
+			// câmera (Para que possamos acompanhar ele)
+			// de acordo com a posição.
+			individuo.carroRenderer.material.color = coresPosicoes[index];
+			individuo.cameraCinemachine.Priority   = i == 0 ? 11 : 10;
+		}
+    }
 }
