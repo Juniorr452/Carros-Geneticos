@@ -10,7 +10,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	private int geracaoAtual = 1;
 	private float fatorMutacao = 0.05f;
 
-	List<Individuo> populacao;
+	public List<Individuo> populacao;
 
 	[Range(3, 1000)]
 	public int tamanhoPopulacao = 10;
@@ -43,8 +43,6 @@ public class AlgoritmoGenetico : MonoBehaviour
 	public CinemachineVirtualCamera cameraPrefab;
 
 	// Cores dos carros em primeiro, segundo e outros lugares
-
-
 	public Color[] coresPosicoes = {
 		new Color(.8113208f, .5610197f, 0, 1),
 		new Color(.1585792f, .5660378f, 0, 1),

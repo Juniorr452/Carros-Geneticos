@@ -20,7 +20,7 @@ public class Individuo : MonoBehaviour
 
 	public bool morto = false;
 
-	public  DistanciaPercorrida distanciaCarro;
+	private DistanciaPercorrida distanciaCarro;
 	private CarController       controladorCarro;
 	private SensoresCarro       sensoresCarro;
 
@@ -37,8 +37,50 @@ public class Individuo : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		
+		Mover();
 	}
+
+    private void Mover()
+    {
+        float horizontal = 0f;
+		float vertical   = 1f;
+
+		float sensorEsquerda    = sensoresCarro.distanciaSensores[0];
+		float sensorDigEsquerda = sensoresCarro.distanciaSensores[1];
+		float sensorFrente      = sensoresCarro.distanciaSensores[2];
+		float sensorDigDireita  = sensoresCarro.distanciaSensores[3];
+		float sensorDireita     = sensoresCarro.distanciaSensores[4];
+		float velocidade        = controladorCarro.CurrentSpeed;
+
+		byte[] genes = cromossomo.decodificar();
+
+		if(genes[0] <= sensorEsquerda)
+			horizontal -= .5f;
+
+		if(genes[1] <= sensorDigEsquerda)
+		{
+			horizontal -= .25f;
+			vertical   -= .25f;
+		}
+
+		if(genes[2] <= sensorFrente)
+			vertical   += .25f;
+		
+		if(genes[3] <= sensorDigDireita)
+		{
+			horizontal += .25f;
+			vertical   -= .25f;
+		}
+
+		if(genes[4] <= sensorDireita)
+			horizontal += .5f;
+
+		if(genes[5] <= velocidade)
+			vertical += .2f;
+
+		controladorCarro.Move(horizontal, vertical, 1f, 0f);
+		//controladorCarro.Move(steering, accel, footbrake, handbrake);
+    }
 
     public void Reposicionar(Transform posicao)
     {
@@ -63,6 +105,8 @@ public class Individuo : MonoBehaviour
 	{
 		if(!morto)
 		{
+			cameraCinemachine.Priority = 0;
+
 			AlgoritmoGenetico alg = FindObjectOfType<AlgoritmoGenetico>();
 			alg.MatarIndividuo(this);
 		}

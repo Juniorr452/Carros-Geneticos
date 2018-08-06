@@ -14,7 +14,6 @@ public class Cromossomo
 		genes = new byte[qtdGenes];
 
 		codificar(limitesInfSup, qtdBits);
-		decodificar(limitesInfSup);
 	}
 
 	private void codificar(float[][] limitesInfSup, int qtdBits)
@@ -34,8 +33,8 @@ public class Cromossomo
 		}
 	}
 
-	private void decodificar(float[][] limitesInfSup)
+	public byte[] decodificar()
 	{
-		
+		return genes;
 	}
 }
