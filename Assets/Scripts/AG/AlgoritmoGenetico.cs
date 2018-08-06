@@ -6,20 +6,25 @@ using UnityEngine;
 
 public class AlgoritmoGenetico : MonoBehaviour 
 {
+	[Range(3, 1000)]
+	public int   tamanhoPopulacao         = 10;
+	public float fatorMutacao             = 0.05f;
+	public int   qtdIndividuosASelecionar = 2;
+
 	[SerializeField]
 	private int geracaoAtual = 1;
-	private float fatorMutacao = 0.05f;
 
-	public List<Individuo> populacao;
-
-	[Range(3, 1000)]
-	public int tamanhoPopulacao = 10;
+	public  List<Individuo> populacao;
+	[SerializeField]
+	private List<Individuo> individuosSelecionados;
+	[SerializeField]
+	private List<Individuo> individuosGerados;
 
 	[SerializeField]
-	private int individuosGerados = 0;
+	private int qtdIndividuosGerados = 0;
 
 	[SerializeField]
-	private int individuosMortos;
+	private int qtdIndividuosMortos;
 
 	// Limites superior e inferior para os genes
 	// 5 primeiros são os sensores e o último é da velocidade do carro
@@ -32,7 +37,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Frente
 		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Direita
 		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Direita
-		new float[] {0, 200} // Velocidade do Carro
+		new float[] {0, 200}                           // Velocidade do Carro
 	};
 
 	// Define onde os indivíduos serão spawnados
@@ -65,14 +70,17 @@ public class AlgoritmoGenetico : MonoBehaviour
 
     void inicializarPopulacao()
 	{
-		individuosMortos = 0;
-		populacao = new List<Individuo>(tamanhoPopulacao);
+		qtdIndividuosMortos = 0;
 
-		for(int i = 0; i < tamanhoPopulacao; i++, individuosGerados++)
+		populacao              = new List<Individuo>(tamanhoPopulacao);
+		individuosGerados      = new List<Individuo>();
+		individuosSelecionados = new List<Individuo>();
+
+		for(int i = 0; i < tamanhoPopulacao; i++, qtdIndividuosGerados++)
 		{
 			Individuo carro = InstanciarIndividuo();
 
-			carro.nome       = "Individuo_" + individuosGerados;
+			carro.nome       = "Individuo_" + qtdIndividuosGerados;
 			carro.cromossomo = new Cromossomo(qtdGenes, limitesInfSupCromo);
 
 			populacao.Add(carro);
@@ -94,13 +102,18 @@ public class AlgoritmoGenetico : MonoBehaviour
     // TODO: Seleção
     void Selecao()
 	{
+		populacao.Sort(Individuo.OrdenarPelaDistanciaPercorrida);
 
+		individuosSelecionados.Clear();
+
+		for(int i = 0; i < qtdIndividuosASelecionar; i++)
+			individuosSelecionados.Add(populacao[i]);
 	}
 
 	// TODO: CrossOver
 	void CrossOver()
 	{
-
+		individuosGerados.Clear();
 	}
 
 	// TODO: Mutação
@@ -143,7 +156,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 			individuo.morto = false;
 		}
 
-		individuosMortos = 0;
+		qtdIndividuosMortos = 0;
 
 		Camera camera = FindObjectOfType<Camera>();
 		camera.transform.position = posicaoSpawn.position;
@@ -155,9 +168,9 @@ public class AlgoritmoGenetico : MonoBehaviour
         individuo.gameObject.SetActive(false);
 		individuo.morto = true;
 
-		individuosMortos++;
+		qtdIndividuosMortos++;
 
-		if(individuosMortos == tamanhoPopulacao)
+		if(qtdIndividuosMortos == tamanhoPopulacao)
 			GerarProximaGeracao();
 	}
 
