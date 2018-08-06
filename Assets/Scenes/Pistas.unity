@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   geracaoAtual: 1
   tamanhoPopulacao: 10
+  individuosGerados: 0
   individuosMortos: 0
   posicaoSpawn: {fileID: 506882722}
   carroPrefab: {fileID: 4695131287600012, guid: 28706e79144fff845bf3efcbb29a32cf,
@@ -696,7 +697,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 65554313657090388, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65097111905836706, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 
@@ -708,7 +709,7 @@ Prefab:
       value: 
       objectReference: {fileID: 13400000, guid: 67db31eead11e8d6d00011d98d76c639,
         type: 2}
-    - target: {fileID: 65097111905836706, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65554313657090388, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 

@@ -16,7 +16,24 @@ public class AlgoritmoGenetico : MonoBehaviour
 	public int tamanhoPopulacao = 10;
 
 	[SerializeField]
+	private int individuosGerados = 0;
+
+	[SerializeField]
 	private int individuosMortos;
+
+	// Limites superior e inferior para os genes
+	// 5 primeiros são os sensores e o último é da velocidade do carro
+	private const int qtdGenes = 6;
+	[SerializeField]
+	private float[][] limitesInfSupCromo = new float[qtdGenes][]
+	{
+		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Esquerda
+		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Esquerda
+		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Frente
+		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Direita
+		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Direita
+		new float[] {0, 200} // Velocidade do Carro
+	};
 
 	// Define onde os indivíduos serão spawnados
 	public Transform posicaoSpawn;
@@ -42,9 +59,14 @@ public class AlgoritmoGenetico : MonoBehaviour
 		individuosMortos = 0;
 		populacao = new List<Individuo>(tamanhoPopulacao);
 
-		for(int i = 0; i < tamanhoPopulacao; i++){
-			// TODO: Inicializar o gene aleatoriamente
-			populacao.Add(InstanciarIndividuo());
+		for(int i = 0; i < tamanhoPopulacao; i++, individuosGerados++)
+		{
+			Individuo carro = InstanciarIndividuo();
+
+			carro.nome       = "Individuo_" + individuosGerados;
+			carro.cromossomo = new Cromossomo(qtdGenes, limitesInfSupCromo);
+
+			populacao.Add(carro);
 		}
 	}
 
@@ -55,15 +77,21 @@ public class AlgoritmoGenetico : MonoBehaviour
 		Selecao();
 		CrossOver();
 		Mutacao(fatorMutacao);
-		ReposicionarCarros();
+		RespawnarCarros();
 
 		geracaoAtual++;
 	}
 
-    private void ReposicionarCarros()
+    private void RespawnarCarros()
     {
         foreach(Individuo individuo in populacao)
+		{
 			individuo.Reposicionar(posicaoSpawn);
+			individuo.gameObject.SetActive(true);
+			individuo.morto = false;
+		}
+
+		individuosMortos = 0;
     }
 
     // TODO: Seleção
@@ -104,5 +132,16 @@ public class AlgoritmoGenetico : MonoBehaviour
 		camera.m_LookAt = carro;
 
 		return carro.GetComponent<Individuo>();
+	}
+
+	public void MatarIndividuo(Individuo individuo)
+	{
+        individuo.gameObject.SetActive(false);
+		individuo.morto = true;
+
+		individuosMortos++;
+
+		if(individuosMortos == tamanhoPopulacao)
+			GerarProximaGeracao();
 	}
 }

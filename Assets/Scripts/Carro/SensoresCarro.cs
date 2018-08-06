@@ -12,7 +12,7 @@ public class SensoresCarro : MonoBehaviour
 
 	public Vector3 offsetRaycast = new Vector3(0, .5f, 0);
 
-	public float tamanhoRaycast  = 75f;
+	public static float tamanhoRaycast  = 100f;
 	public bool  desenharRaycast = true;
 
 	// Start is called on the frame when a script is enabled just before

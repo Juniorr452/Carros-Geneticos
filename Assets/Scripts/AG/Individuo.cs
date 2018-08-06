@@ -14,15 +14,18 @@ using UnityStandardAssets.Vehicles.Car;
 [RequireComponent(typeof(CarController))]
 public class Individuo : MonoBehaviour 
 {
-	private string nome;
-	public  Cromossomo cromossomo;
+	public string nome;
+	public Cromossomo cromossomo;
+
+	public bool morto = false;
 
 	private DistanciaPercorrida distanciaCarro;
 	private CarController       controladorCarro;
 	private SensoresCarro       sensoresCarro;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		controladorCarro = GetComponent<CarController>();
 		distanciaCarro   = GetComponent<DistanciaPercorrida>();
 		sensoresCarro    = GetComponent<SensoresCarro>();
@@ -43,8 +46,6 @@ public class Individuo : MonoBehaviour
 		transform.rotation = posicao.rotation;
 
 		distanciaCarro.ResetarDistancia(posicao.position);
-
-		gameObject.SetActive(true);
     }
 
 	/*public void novoIndividuo(String nome, Cromossomo cromossomo)
@@ -54,7 +55,12 @@ public class Individuo : MonoBehaviour
 		distanciaCarro.ResetarDistancia();
 	}*/
 
-    public void Morrer(){
-        gameObject.SetActive(false);
+    public void Morrer()
+	{
+		if(!morto)
+		{
+			AlgoritmoGenetico alg = FindObjectOfType<AlgoritmoGenetico>();
+			alg.MatarIndividuo(this);
+		}
     }
 }
