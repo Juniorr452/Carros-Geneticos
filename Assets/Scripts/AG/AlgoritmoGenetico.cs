@@ -9,6 +9,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	[Range(3, 1000)]
 	public int   tamanhoPopulacao         = 10;
 	public float fatorMutacao             = 0.05f;
+	[Range(2, 6)]
 	public int   qtdIndividuosASelecionar = 2;
 
 	[SerializeField]
@@ -17,8 +18,6 @@ public class AlgoritmoGenetico : MonoBehaviour
 	public  List<Individuo> populacao;
 	[SerializeField]
 	private List<Individuo> individuosSelecionados;
-	[SerializeField]
-	private List<Individuo> individuosGerados;
 
 	[SerializeField]
 	private int qtdIndividuosGerados = 0;
@@ -73,7 +72,6 @@ public class AlgoritmoGenetico : MonoBehaviour
 		qtdIndividuosMortos = 0;
 
 		populacao              = new List<Individuo>(tamanhoPopulacao);
-		individuosGerados      = new List<Individuo>();
 		individuosSelecionados = new List<Individuo>();
 
 		for(int i = 0; i < tamanhoPopulacao; i++, qtdIndividuosGerados++)
@@ -107,19 +105,37 @@ public class AlgoritmoGenetico : MonoBehaviour
 		individuosSelecionados.Clear();
 
 		for(int i = 0; i < qtdIndividuosASelecionar; i++)
+		{
 			individuosSelecionados.Add(populacao[i]);
+			populacao.RemoveAt(i);
+		}
+			
 	}
 
 	// TODO: CrossOver
 	void CrossOver()
 	{
-		individuosGerados.Clear();
+
 	}
 
 	// TODO: Mutação
 	void Mutacao(float fatorMutacao)
 	{
+		for(int i = 0; i < populacao.Count; i++)
+		{
+			Individuo individuo = populacao[0];
 
+			foreach(BitArray gene in individuo.cromossomo.genes)
+				for(int j = 0; j < gene.Count; j++)
+				{
+					float random = UnityEngine.Random.Range(0, 1);
+
+					// Se tiver gerado um valor dentro do fator de
+					// mutação, faz um NOT no valor do bit.
+					if(random <= fatorMutacao)
+						gene[i] = !gene[i];
+				}	
+		}
 	}
 
 	// TODO: Parar
