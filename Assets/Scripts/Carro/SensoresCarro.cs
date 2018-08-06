@@ -5,15 +5,29 @@ using UnityEngine;
 
 public class SensoresCarro : MonoBehaviour 
 {
-	// Sensores de distância entre o carro e as paredes
-	public int qtdSensores = 5;
+	//
+	// ─── PARÂMETROS DOS SENSORES ────────────────────────────────────────────────────
+	//
+
+	public static float   tamanhoRaycast  = 100f;
+	public        int     qtdSensores     = 5;
+	public        bool    desenharRaycast = true;
+
+	/**
+	 * Esse Vector3 será somado com a posição
+	 * do objeto para os sensores não ficarem
+	 * muito perto do chão.
+	 */
+	public Vector3 offsetRaycast = new Vector3(0, .5f, 0);
+
+	//
+	// ─── SENSORES DE DISTÂNCIA ENTRE O CARRO E AS PAREDES ───────────────────────────
+	//
+		
 	private Vector3[] direcaoSensores;
 	public  float[]   distanciaSensores;
 
-	public Vector3 offsetRaycast = new Vector3(0, .5f, 0);
-
-	public static float tamanhoRaycast  = 100f;
-	public bool  desenharRaycast = true;
+	// ────────────────────────────────────────────────────────────────────────────────
 
 	// Start is called on the frame when a script is enabled just before
 	// any of the Update methods is called the first time.
@@ -30,6 +44,10 @@ public class SensoresCarro : MonoBehaviour
 		AtualizarDistanciaSensores();
 	}
 
+	/**
+	 * Dispara os sensores até uma determinada distância
+	 * e verifica se atingiu algo.
+	 */
     private void AtualizarDistanciaSensores()
     {
         for(int i = 0; i < direcaoSensores.Length; i++)
@@ -51,6 +69,10 @@ public class SensoresCarro : MonoBehaviour
 		}
     }
 
+	/**
+	 * Atualiza a direção dos sensores de acordo com
+	 * a orientação atual do objeto.
+	 */
     private void AtualizarDirecaoSensores()
     {
         // Esquerda

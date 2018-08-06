@@ -5,27 +5,54 @@ using Cinemachine;
 using UnityEngine;
 using UnityStandardAssets.Vehicles.Car;
 
-/* Indivíduo é a classe que, a partir das informações dos cromossomos, 
-   irá decidir como vai atuar sobre o carro (Acelerar, frear, mover pro lado...) */
-
-/* A ideia seria ler a velocidade do carro e 
-   os parâmetros dos sensores e decidir o que fazer de acordo
-   com as informações dos cromossomos */
+/**
+ * A partir das informações dos cromossomos, o indivíduo irá
+ * decidir como vai atuar sobre o carro (Acelerar, frear, mover pro lado...)
+ * 
+ * A ideia seria ler a velocidade do carro e os 
+ * parâmetros dos sensores e decidir o que fazer 
+ * de acordo com as informações dos cromossomos.
+ */
 
 [RequireComponent(typeof(CarController))]
 public class Individuo : MonoBehaviour 
 {
+	//
+	// ─── INFORMAÇÕES BÁSICAS ────────────────────────────────────────────────────────
+	//
+
 	public string nome;
 	public Cromossomo cromossomo;
 
 	public bool morto = false;
 
+	//
+	// ─── SENSORES E CONTROLADOR ─────────────────────────────────────────────────────
+	//
+
+	/**
+	 * Para controlar o carro (fazer virar, acelerar...).
+	 */
+	private CarController controladorCarro;
+
 	private DistanciaPercorrida distanciaCarro;
-	private CarController       controladorCarro;
 	private SensoresCarro       sensoresCarro;
 
+	//
+	// ─── OUTROS ─────────────────────────────────────────────────────────────────────
+	//
+
+	/**
+	 * Camera do cinemachine para acompanhar o carro.
+	 */
 	public CinemachineVirtualCamera cameraCinemachine;
+
+	/**
+	 * Renderer para alterar a cor do material do carro.
+	 */
 	public Renderer carroRenderer;
+
+	// ────────────────────────────────────────────────────────────────────────────────
 
 	// Use this for initialization
 	void Start () 
@@ -40,12 +67,23 @@ public class Individuo : MonoBehaviour
 		Mover();
 	}
 
+	/**
+	 * Usado para quando for gerar um 
+	 * novo indivíduo pelo crossover.
+	 * 
+	 * @param nome - O nome do novo indivíduo.
+	 * @param cromossomo - O novo cromossomo do indivíduo.
+	 */
 	public void Setar(String nome, Cromossomo cromossomo)
 	{
 		this.nome = nome;
 		this.cromossomo = cromossomo;
 	}
 
+	/**
+	 * Processa os valores dos genes de acordo com
+	 * os sensores e move o carro baseado neles.
+	 */
     private void Mover()
     {
         float horizontal = 0f;
@@ -88,6 +126,12 @@ public class Individuo : MonoBehaviour
 		//controladorCarro.Move(steering, accel, footbrake, handbrake);
     }
 
+	/**
+	 * Reseta a física, posição e rotação do
+	 * objeto para um ponto.
+	 * 
+	 * @param posicao - O ponto de reposicionamento do objeto.
+	 */
     public void Reposicionar(Transform posicao)
     {
 		Rigidbody rb       = controladorCarro.GetComponent<Rigidbody>();
@@ -100,13 +144,10 @@ public class Individuo : MonoBehaviour
 		distanciaCarro.ResetarDistancia(posicao.position);
     }
 
-	/*public void novoIndividuo(String nome, Cromossomo cromossomo)
-	{
-		this.nome = nome;
-		this.cromossomo = cromossomo;
-		distanciaCarro.ResetarDistancia();
-	}*/
-
+	/**
+	 * Abaixa a prioridade da câmera e fala pro
+	 * algoritmo genético para morrer.
+	 */
     public void Morrer()
 	{
 		if(!morto)
@@ -118,6 +159,10 @@ public class Individuo : MonoBehaviour
 		}
     }
 
+	//
+	// ─── COMPARADOR ─────────────────────────────────────────────────────────────────
+	//
+
 	public static int OrdenarPelaDistanciaPercorrida(Individuo i1, Individuo i2) 
 	{
 		float d1 = i1.distanciaCarro.getDistanciaPercorrida();
@@ -125,4 +170,6 @@ public class Individuo : MonoBehaviour
 
     	return d2.CompareTo(d1);
  	}
+
+ 	// ────────────────────────────────────────────────────────────────────────────────
 }

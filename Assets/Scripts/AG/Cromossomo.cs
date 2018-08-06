@@ -3,11 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * Cromossomo possui a codificação dos genes em binário.
+ */
 public class Cromossomo
 {
 	public BitArray[] genes;
 
+	/**
+	 * Quantidade de bits para cada gene.
+	 */
 	private const int qtdBits = 8;
+
+	//
+	// ─── CONSTRUTORES ───────────────────────────────────────────────────────────────
+	//
 
 	public Cromossomo(BitArray[] genesCodificados){
 		this.genes = genesCodificados;
@@ -20,6 +30,14 @@ public class Cromossomo
 		codificar(limitesInfSup, qtdBits);
 	}
 
+	//
+	// ─── CODIFICAÇÃO E DECODIFICAÇÃO ────────────────────────────────────────────────
+	//
+
+	/**
+	 * Baseado no pseudocódigo fornecido
+	 * na aula de codificação.
+	 */
 	private void codificar(float[][] limitesInfSup, int qtdBits)
 	{
 		for(int i = 0; i < genes.Length; i++)
@@ -36,7 +54,9 @@ public class Cromossomo
 		}
 	}
 
-	// TODO:
+	/**
+	 * TODO: Fazer a decodificação de acordo com o pseudocódigo.
+	 */
 	public byte[] decodificar()
 	{
 		byte[] bytes = new byte[genes.Length];
@@ -47,22 +67,35 @@ public class Cromossomo
 		return bytes;
 	}
 
-	// https://stackoverflow.com/questions/45759398/byte-to-bitarray-and-back-to-byte
+	//
+	// ─── CONVERSORES ────────────────────────────────────────────────────────────────
+	//
+
+	/**
+	 * https://stackoverflow.com/questions/45759398/byte-to-bitarray-and-back-to-byte
+	 */
 	public byte ConverterBitArrayParaByte(BitArray bits)
 	{
+		/**
+		 * New byte[1] pq estamos usando apenas 8 bits
+		 * para codificar nossos genes.
+		 */
 		var bytes = new byte[1];
     	bits.CopyTo(bytes, 0);
     	return bytes[0];
 	}
 
-	private void imprimirBitArray(BitArray bits)
+	private String ConverterBitArrayParaString(BitArray bits)
 	{
 		String s = "";
 
-		// Tem que percorrer ao contrário porque ele
-		// armazena os bits menos significativos 
-		// nos primeiros índices.
-		// https://stackoverflow.com/questions/9066831/bitarray-returns-bits-the-wrong-way-around
+		/**
+		 * Tem que percorrer ao contrário porque ele
+		 * armazena os bits menos significativos
+		 * nos primeiros índices.
+		 * 
+		 * https://stackoverflow.com/questions/9066831/bitarray-returns-bits-the-wrong-way-around
+		 */
 		for(int i = bits.Length - 1; i >= 0; i--)
 		{
 			bool bit = bits[i];
@@ -71,6 +104,7 @@ public class Cromossomo
 			else    s += "0";
 		}
 
-		Debug.Log("bits: " + s);
+		return s;
 	}
+	// ────────────────────────────────────────────────────────────────────────────────
 }

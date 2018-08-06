@@ -153,11 +153,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987e47d999096944b97469896cd437b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tamanhoPopulacao: 10
+  fatorMutacao: 0.05
+  qtdIndividuosASelecionar: 2
   geracaoAtual: 1
   populacao: []
-  tamanhoPopulacao: 10
-  individuosGerados: 0
-  individuosMortos: 0
+  individuosSelecionados: []
+  qtdIndividuosGerados: 0
+  qtdIndividuosMortos: 0
   posicaoSpawn: {fileID: 506882722}
   carroPrefab: {fileID: 4695131287600012, guid: 28706e79144fff845bf3efcbb29a32cf,
     type: 2}
@@ -193,7 +196,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 388464204}
-  - {fileID: 560958617}
   - {fileID: 1538010602}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -411,47 +413,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &560958616
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 560958617}
-  - component: {fileID: 560958618}
-  m_Layer: 0
-  m_Name: AtualizadorCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &560958617
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 560958616}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 131402877}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &560958618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 560958616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bc8696f0fa5c8743b1c1036bb928b86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tempoAtualizacaoCamera: 0.2
 --- !u!1 &759558553
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,6 +444,53 @@ Transform:
   - {fileID: 1930313917}
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &778524023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 778524025}
+  - component: {fileID: 778524024}
+  m_Layer: 0
+  m_Name: CarrosGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &778524024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 778524023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionMode: 0
+  m_RotationMode: 0
+  m_UpdateMethod: 2
+  m_Targets:
+  - target: {fileID: 0}
+    weight: 1
+    radius: 0
+--- !u!4 &778524025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 778524023}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1184224657
 RectTransform:
@@ -540,7 +548,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4373620311627152, guid: 2d9aca8c8fd038d41a3c0f84757a33a2, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114116395627209642, guid: 2d9aca8c8fd038d41a3c0f84757a33a2,
         type: 2}

@@ -6,17 +6,30 @@ using UnityEngine;
 
 public class AlgoritmoGenetico : MonoBehaviour 
 {
+	//
+	// ─── PARÂMETROS DO AG ───────────────────────────────────────────────────────────
+	//
+
 	[Range(3, 1000)]
 	public int   tamanhoPopulacao         = 10;
 	public float fatorMutacao             = 0.05f;
+
 	[Range(2, 6)]
 	public int   qtdIndividuosASelecionar = 2;
+
+	//
+	// ─── INFORMAÇÃO DOS INDIVÍDUOS ──────────────────────────────────────────────────
+	//
 
 	[SerializeField]
 	private int geracaoAtual = 1;
 
 	public  List<Individuo> populacao;
+
 	[SerializeField]
+	/**
+	 * Indivíduos que passaram na fase de seleção.
+	 */
 	private List<Individuo> individuosSelecionados;
 
 	[SerializeField]
@@ -25,9 +38,13 @@ public class AlgoritmoGenetico : MonoBehaviour
 	[SerializeField]
 	private int qtdIndividuosMortos;
 
-	// Limites superior e inferior para os genes
-	// 5 primeiros são os sensores e o último é da velocidade do carro
+	//
+	// ─── GENES E LIMITES DOS VALORES ────────────────────────────────────────────────
+	//
+
+	// 5 primeiros são os sensores e o último é da velocidade do carro.
 	private const int qtdGenes = 6;
+
 	[SerializeField]
 	private float[][] limitesInfSupCromo = new float[qtdGenes][]
 	{
@@ -39,19 +56,25 @@ public class AlgoritmoGenetico : MonoBehaviour
 		new float[] {0, 200}                           // Velocidade do Carro
 	};
 
-	// Define onde os indivíduos serão spawnados
+	//
+	// ─── SPAWN, PREFABS E CORES DOS CARROS ───────────────────────────────────────────
+	//
+
+	// Define onde os indivíduos serão spawnados.
 	public Transform posicaoSpawn;
 
-	// Prefabs do carro e da câmera
+	// Prefabs do carro e da câmera.
 	public Transform carroPrefab;
 	public CinemachineVirtualCamera cameraPrefab;
 
-	// Cores dos carros em primeiro, segundo e outros lugares
+	// Cores dos carros em primeiro, segundo e outros lugares.
 	public Color[] coresPosicoes = {
-		new Color(.8113208f, .5610197f, 0, 1),
-		new Color(.1585792f, .5660378f, 0, 1),
-		new Color(.764151f, .764151f, .764151f, 1),
+		new Color(.8113208f, .5610197f, 0, 1),      // Dourado
+		new Color(.1585792f, .5660378f, 0, 1),      // Verde
+		new Color(.764151f, .764151f, .764151f, 1), // Cinza
 	};
+
+	// ────────────────────────────────────────────────────────────────────────────────
 
 	// Use this for initialization
 	void Start () {
@@ -59,14 +82,17 @@ public class AlgoritmoGenetico : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
-	{
-		//if(Input.GetButtonDown("Jump"))
-		//	GerarProximaGeracao();
-
+	void Update () {
 		VerificarPosicoesCarro();
 	}
 
+	//
+	// ─── FUNÇÕES BÁSICAS DO ALGORITMO GENÉTICO ──────────────────────────────────────
+	//
+
+	/**
+	 * Cria e configura os indivíduos da primeira geração.
+	 */
     void inicializarPopulacao()
 	{
 		qtdIndividuosMortos = 0;
@@ -86,9 +112,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	}
 
 	public void GerarProximaGeracao()
-	{
-		// TODO:
-		
+	{	
 		Selecao();
 		CrossOver();
 		Mutacao(fatorMutacao);
@@ -96,9 +120,13 @@ public class AlgoritmoGenetico : MonoBehaviour
 		RespawnarCarros();
 
 		geracaoAtual++;
+		qtdIndividuosMortos = 0;
 	}
 
-    // TODO: Seleção
+	/**
+	 * TODO: Fazer seleção com o 
+	 * pseudocódigo da aula de seleção. 
+	 */
     void Selecao()
 	{
 		populacao.Sort(Individuo.OrdenarPelaDistanciaPercorrida);
@@ -113,10 +141,13 @@ public class AlgoritmoGenetico : MonoBehaviour
 			
 	}
 
-	// TODO: CrossOver
+	/**
+	 * TODO: Fazer crossover com o 
+	 * pseudocódigo da aula de crossover.
+	 */
 	void CrossOver()
 	{
-		// Selecionando só 2 por enquanto...
+		// Selecionando só 2 indivíduos por enquanto...
 		Cromossomo cromossomo1 = individuosSelecionados[0].cromossomo;
 		Cromossomo cromossomo2 = individuosSelecionados[1].cromossomo;
 
@@ -157,7 +188,10 @@ public class AlgoritmoGenetico : MonoBehaviour
 		}
 	}
 
-	// TODO: Mutação
+	/**
+	 * TODO: Fazer o algoritmo de acordo com
+	 * o pseudocódigo da aula de mutação.
+	 */
 	void Mutacao(float fatorMutacao)
 	{
 		for(int i = 0; i < populacao.Count; i++)
@@ -177,18 +211,32 @@ public class AlgoritmoGenetico : MonoBehaviour
 		}
 	}
 
+	/**
+	 * Coloca os indivíduos selecionados na próxima geração.
+	 */
 	void Elitismo()
 	{
 		foreach(Individuo i in individuosSelecionados)
 			populacao.Add(i);
 	}
 
-	// TODO: Parar
+	/** 
+	 * TODO: Parar 
+	 * Parar a simulação quando o objetivo for atingido.
+	 */
 	void Parar()
 	{
 
 	}
 
+	//
+	// ─── INSTANCIAMENTO, RESPAWN E MORTE DO CARRO ───────────────────────────────────
+	//
+
+	/**
+	 * Instacia um carro e câmera e configura
+	 * a câmera para seguir ele.
+	 */
 	Individuo InstanciarIndividuo()
 	{
 		Transform carro = Instantiate(carroPrefab, 
@@ -208,22 +256,26 @@ public class AlgoritmoGenetico : MonoBehaviour
 		return carro.GetComponent<Individuo>();
 	}
 
+	/**
+	 * Reposiciona e reativa os carros.
+	 */
 	private void RespawnarCarros()
     {
         foreach(Individuo individuo in populacao)
 		{
 			individuo.Reposicionar(posicaoSpawn);
-			individuo.gameObject.SetActive(true);
 			individuo.morto = false;
+			individuo.gameObject.SetActive(true);
 		}
-
-		qtdIndividuosMortos = 0;
-
-		Camera camera = FindObjectOfType<Camera>();
-		camera.transform.position = posicaoSpawn.position;
-		camera.transform.rotation = posicaoSpawn.rotation;
     }
 
+	/**
+	 * Desativa o gameobject, seta como morto,
+	 * incrementa e verifica a quantidade de 
+	 * indivíduos mortos para gerar a próxima gen.
+	 * 
+	 * @param individuo - O indivíduo a ser morto.
+	 */
 	public void MatarIndividuo(Individuo individuo)
 	{
         individuo.gameObject.SetActive(false);
@@ -235,6 +287,15 @@ public class AlgoritmoGenetico : MonoBehaviour
 			GerarProximaGeracao();
 	}
 
+	//
+	// ─── POSIÇÕES DOS CARROS ────────────────────────────────────────────────────────
+	//
+
+	/**
+	 * Verifica em quais posições os carros
+	 * estão (Primeiro lugar, segundo lugar...)
+	 * para dar uma cor específica a eles.
+	 */
 	private void VerificarPosicoesCarro()
     {
         populacao.Sort(Individuo.OrdenarPelaDistanciaPercorrida);
@@ -255,4 +316,5 @@ public class AlgoritmoGenetico : MonoBehaviour
 			individuo.cameraCinemachine.Priority   = i == 0 && !individuo.morto ? 1 : 0;
 		}
     }
+	// ────────────────────────────────────────────────────────────────────────────────
 }

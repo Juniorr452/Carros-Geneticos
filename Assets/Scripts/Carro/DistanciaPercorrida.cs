@@ -18,8 +18,10 @@ public class DistanciaPercorrida : MonoBehaviour
 		AtualizarDistanciaPercorrida();
 	}
 
-	// Calcula o quanto o carro andou de um ponto a outro e soma
-	// com a distância percorrida.
+	/**
+	 * Calcula o quanto o carro andou de um ponto a outro 
+	 * e soma com a distância percorrida.
+	 */
 	private void AtualizarDistanciaPercorrida()
     {
 		// TODO: Talvez desconsiderar a distância vertical.
