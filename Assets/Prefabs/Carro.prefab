@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 114126145139115814}
   - component: {fileID: 114200967662601146}
   - component: {fileID: 114066675958220388}
-  - component: {fileID: 114733305752615090}
   m_Layer: 9
   m_Name: Carro
   m_TagString: Player
@@ -212,7 +211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1302339796206438
 GameObject:
   m_ObjectHideFlags: 1
@@ -2256,10 +2255,7 @@ MonoBehaviour:
   - {fileID: 1250371130860534}
   - {fileID: 1243317329395240}
   m_WheelEffects:
-  - {fileID: 114791631543776468}
-  - {fileID: 114442783801426986}
-  - {fileID: 114522470139479764}
-  - {fileID: 114142839832079960}
+  - {fileID: 0}
   m_CentreOfMassOffset: {x: 0, y: 0, z: 0}
   m_MaximumSteerAngle: 25
   m_SteerHelper: 0.644
@@ -2269,7 +2265,7 @@ MonoBehaviour:
   m_MaxHandbrakeTorque: 100000000
   m_Downforce: 100
   m_SpeedType: 0
-  m_Topspeed: 200
+  m_Topspeed: 70
   m_RevRangeBoundary: 1
   m_SlipLimit: 0.3
   m_BrakeTorque: 20000
@@ -2517,18 +2513,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114733305752615090
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1119168972892654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43ab30f31fbb62479f3d2d6c3780424, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  individuo: {fileID: 114663809794134914}
 --- !u!114 &114791631543776468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2622,9 +2606,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   qtdSensores: 5
-  distanciaSensores: []
-  offsetRaycast: {x: 0, y: 0.2, z: 0}
   desenharRaycast: 1
+  offsetRaycast: {x: 0, y: 0.2, z: 0}
+  distanciaSensores: []
 --- !u!146 &146349379639031312
 WheelCollider:
   m_ObjectHideFlags: 1

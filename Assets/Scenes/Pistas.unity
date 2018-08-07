@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987e47d999096944b97469896cd437b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tamanhoPopulacao: 10
+  tamanhoPopulacao: 5
   fatorMutacao: 0.05
   qtdIndividuosASelecionar: 2
   geracaoAtual: 1
@@ -756,13 +756,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 65097111905836706, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65167439285110880, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 13400000, guid: 67db31eead11e8d6d00011d98d76c639,
         type: 2}
-    - target: {fileID: 65167439285110880, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65097111905836706, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 
@@ -777,16 +777,6 @@ Prefab:
     - target: {fileID: 1119168972892654, guid: 28706e79144fff845bf3efcbb29a32cf, type: 2}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114822808512136848, guid: 28706e79144fff845bf3efcbb29a32cf,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114663809794134914, guid: 28706e79144fff845bf3efcbb29a32cf,
-        type: 2}
-      propertyPath: cameraCinemachine
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28706e79144fff845bf3efcbb29a32cf, type: 2}
@@ -949,17 +939,21 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1233419494317624, guid: e72dab79e3f5d7d48bde940ebca54fba, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1223923532784878, guid: e72dab79e3f5d7d48bde940ebca54fba, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1191395130045156, guid: e72dab79e3f5d7d48bde940ebca54fba, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1245203075315608, guid: e72dab79e3f5d7d48bde940ebca54fba, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1733801548821788, guid: e72dab79e3f5d7d48bde940ebca54fba, type: 2}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
