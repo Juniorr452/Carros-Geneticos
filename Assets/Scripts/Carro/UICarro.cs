@@ -8,11 +8,17 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CarController))]
 [RequireComponent(typeof(SensoresCarro))]
 
+/**
+ * TODO: Ativar essa UI apenas para o carro
+ * que está sendo assistido.
+ */
 public class UICarro : MonoBehaviour 
 { 
+	public Text nomeCarroText;
 	public Text infoCarroText;
 	public Text sensoresCarroText;
 	
+	private Individuo           individuo;
 	private CarController       carController;
 	private SensoresCarro       sensoresCarro;
 	private DistanciaPercorrida distanciaCarro;
@@ -20,6 +26,9 @@ public class UICarro : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		individuo          = GetComponent<Individuo>();
+		nomeCarroText.text = individuo.nome;
+
 		distanciaCarro = GetComponent<DistanciaPercorrida>();
 		carController  = GetComponent<CarController>();
 		sensoresCarro  = GetComponent<SensoresCarro>();
