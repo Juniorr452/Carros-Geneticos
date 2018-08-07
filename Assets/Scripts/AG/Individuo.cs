@@ -114,6 +114,10 @@ public class Individuo : MonoBehaviour
 	/**
 	 * Processa os valores dos genes de acordo com
 	 * os sensores e move o carro baseado neles.
+	 * 
+	 * TODO: Pensar melhor numa função de mover
+	 * pro carro.
+	 * 
 	 */
     private void Mover()
     {
@@ -192,6 +196,7 @@ public class Individuo : MonoBehaviour
 		// ─── APLICAR NO CARRO ────────────────────────────────────────────
 		//
 
+		// TODO: Não deixar o carro dar ré.
 		controladorCarro.Move(horizontal, vertical, vertical, 0f);
 		//controladorCarro.Move(steering, accel, footbrake, handbrake);
     }

@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
+/**
+ * TODO: Fazer um cálculo de pontuação em que
+ * favoreça os carros que estiverem mais no centro
+ * da pista.
+ */
 public class AlgoritmoGenetico : MonoBehaviour 
 {
 	//
@@ -11,7 +16,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	//
 
 	[Range(3, 1000)]
-	public int   tamanhoPopulacao = 10;
+	public int tamanhoPopulacao = 10;
 
 	[Range(0, 1)]
 	public float fatorMutacao = 0.05f;
@@ -26,7 +31,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	[SerializeField]
 	private int geracaoAtual = 1;
 
-	public  List<Individuo> populacao;
+	public List<Individuo> populacao;
 
 	/**
 	 * Indivíduos que passaram na fase de seleção.
@@ -45,6 +50,8 @@ public class AlgoritmoGenetico : MonoBehaviour
 	//
 
 	/**
+	 * TODO: Pensar numa estrutura de genes melhor.
+	 * 
 	 * Cromossomo 01 - A partir de qual valor do sensor o 
 	 * 	carro deve se mover.
 	 * 
@@ -61,8 +68,10 @@ public class AlgoritmoGenetico : MonoBehaviour
 	 */
 	private const int qtdGenes = 6;
 
+	/**
+	 * TODO: Otimizar aqui e na codificação do cromossomo.
+	 */
 	[SerializeField]
-	// TODO: Otimizar aqui e na codificação do cromossomo
 	private float[][][] limitesInfSupCromo = new float[qtdCromossomos][][]
 	{
 		new float[qtdGenes][] {
