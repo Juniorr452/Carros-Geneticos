@@ -143,9 +143,9 @@ public class Individuo : MonoBehaviour
 		for(int i = 0; i < cromossomos.Length; i++)
 			genes[i] = cromossomos[i].decodificar();
 
-		byte[] gene01   = genes[0];
-		byte[] genePeso = genes[1];
-		byte[] geneHV   = genes[2];
+		byte[] geneLimite = genes[0];
+		byte[] genePeso   = genes[1];
+		byte[] geneHV     = genes[2];
 
 		//
 		// ─── COMPUTAR OS VALORES HORIZONTAIS E VERTICAIS ─────────────────
@@ -153,9 +153,9 @@ public class Individuo : MonoBehaviour
 
 		for(int i = 0; i < genes[0].Length; i++)
 		{
-			if(sensores[i] <= gene01[i])
+			if(sensores[i] <= geneLimite[i])
 			{
-				float v = (gene01[i] - sensores[i]) / gene01[i] * (((int) genePeso[i]) - 2);
+				float v = (geneLimite[i] - sensores[i]) / geneLimite[i] * (((int) genePeso[i]) - 2);
 
 				if(geneHV[i] < 50) horizontal += v;
 				else               vertical   += v;
