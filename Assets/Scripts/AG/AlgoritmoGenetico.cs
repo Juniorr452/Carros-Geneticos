@@ -11,11 +11,13 @@ public class AlgoritmoGenetico : MonoBehaviour
 	//
 
 	[Range(3, 1000)]
-	public int   tamanhoPopulacao         = 10;
-	public float fatorMutacao             = 0.05f;
+	public int   tamanhoPopulacao = 10;
+
+	[Range(0, 1)]
+	public float fatorMutacao = 0.05f;
 
 	[Range(2, 6)]
-	public int   qtdIndividuosASelecionar = 2;
+	public int qtdIndividuosASelecionar = 2;
 
 	//
 	// ─── INFORMAÇÃO DOS INDIVÍDUOS ──────────────────────────────────────────────────
@@ -26,10 +28,10 @@ public class AlgoritmoGenetico : MonoBehaviour
 
 	public  List<Individuo> populacao;
 
-	[SerializeField]
 	/**
 	 * Indivíduos que passaram na fase de seleção.
 	 */
+	[SerializeField]
 	private List<Individuo> individuosSelecionados;
 
 	[SerializeField]
@@ -42,18 +44,57 @@ public class AlgoritmoGenetico : MonoBehaviour
 	// ─── GENES E LIMITES DOS VALORES ────────────────────────────────────────────────
 	//
 
-	// 5 primeiros são os sensores e o último é da velocidade do carro.
+	/**
+	 * Cromossomo 01 - A partir de qual valor do sensor o 
+	 * 	carro deve se mover.
+	 * 
+	 * Cromossomo 02 - Pesos dos genes do cromossomo 01.
+	 * 
+	 * Cromossomo 03 - Se o valor calculado a partir dos 
+	 * 	cromossomos 01 e 02 deve ser aplicado na 
+	 * 	horizontal ou vertical.
+	 */
+	private const int qtdCromossomos = 3;
+
+	/**
+	 * Quantidade de genes por cromossomo.
+	 */
 	private const int qtdGenes = 6;
 
 	[SerializeField]
-	private float[][] limitesInfSupCromo = new float[qtdGenes][]
+	// TODO: Otimizar aqui e na codificação do cromossomo
+	private float[][][] limitesInfSupCromo = new float[qtdCromossomos][][]
 	{
-		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Esquerda
-		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Esquerda
-		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Frente
-		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Direita
-		new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Direita
-		new float[] {0, 200}                           // Velocidade do Carro
+		new float[qtdGenes][] {
+			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Esquerda
+			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Esquerda
+			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Frente
+			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Direita
+			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Direita
+			new float[] {10, 60}                            // Velocidade do Carro
+		},
+		/**
+		 * Esses valores serão substraídos por 2.
+		 * 
+		 * Não coloquei negativo pq estamos codificando
+		 * em binário unsigned
+		 */
+		new float[qtdGenes][]{
+			new float[] {0, 4},
+			new float[] {0, 4},
+			new float[] {0, 4},
+			new float[] {0, 4},
+			new float[] {0, 4},
+			new float[] {0, 4}
+		},
+		new float[qtdGenes][]{
+			new float[] {0, 100},
+			new float[] {0, 100},
+			new float[] {0, 100},
+			new float[] {0, 100},
+			new float[] {0, 100},
+			new float[] {0, 100}
+		}
 	};
 
 	//
@@ -104,8 +145,14 @@ public class AlgoritmoGenetico : MonoBehaviour
 		{
 			Individuo carro = InstanciarIndividuo();
 
-			carro.nome       = "Individuo_" + qtdIndividuosGerados;
-			carro.cromossomo = new Cromossomo(qtdGenes, limitesInfSupCromo);
+			carro.nome = "Individuo_" + qtdIndividuosGerados;
+
+			// Inicializar cada cromossomo.
+			Cromossomo[] cromossomos = new Cromossomo[qtdCromossomos];
+			for(int j = 0; j < qtdCromossomos; j++)
+				cromossomos[j] = new Cromossomo(qtdGenes, limitesInfSupCromo[j]);
+		
+			carro.cromossomos = cromossomos;
 
 			populacao.Add(carro);
 		}
@@ -138,7 +185,6 @@ public class AlgoritmoGenetico : MonoBehaviour
 			individuosSelecionados.Add(populacao[i]);
 			populacao.RemoveAt(i);
 		}
-			
 	}
 
 	/**
@@ -148,67 +194,66 @@ public class AlgoritmoGenetico : MonoBehaviour
 	void CrossOver()
 	{
 		// Selecionando só 2 indivíduos por enquanto...
-		Cromossomo cromossomo1 = individuosSelecionados[0].cromossomo;
-		Cromossomo cromossomo2 = individuosSelecionados[1].cromossomo;
+		Cromossomo[] cromossomos1 = individuosSelecionados[0].cromossomos;
+		Cromossomo[] cromossomos2 = individuosSelecionados[1].cromossomos;
 
-		for(int i = 0; i < populacao.Count; i++)
+		foreach(Individuo individuo in populacao)
 		{
-			Individuo individuo = populacao[i];
-			BitArray[] genesCrossover = new BitArray[qtdGenes];
+			Cromossomo[] cromossomosCrossover = new Cromossomo[qtdCromossomos];
 
-			Debug.Log(individuo.nome + ": " + individuo.cromossomo.ConverterBitArrayParaByte(individuo.cromossomo.genes[0]));
-
-			for(int j = 0; j < qtdGenes; j++)
+			// Para cada cromossomo
+			for(int i = 0; i < qtdCromossomos; i++)
 			{
-				BitArray gene1 = cromossomo1.genes[j];
-				BitArray gene2 = cromossomo2.genes[j];
+				BitArray[] genesCrossover = new BitArray[qtdGenes];
 
-				BitArray geneCrossover = new BitArray(8);
+				// Pegar os cromossomos dos 2 indivíduos selecionados.
+				Cromossomo cromossomo1 = cromossomos1[i];
+				Cromossomo cromossomo2 = cromossomos2[i];
 
-				for(int k = 0; k < gene1.Count; k++)
+				// Para cada gene
+				for(int j = 0; j < qtdGenes; j++)
 				{
-					bool bitEscolhido;
+					BitArray gene1 = cromossomo1.genes[j];
+					BitArray gene2 = cromossomo2.genes[j];
 
-					if(UnityEngine.Random.Range(0, 1) == 0)
-						bitEscolhido = gene1[k];
-					else
-						bitEscolhido = gene2[k];
+					BitArray geneCrossover = new BitArray(8);
 
-					geneCrossover[k] = bitEscolhido;
+					// Para cada alelo
+					for(int k = 0; k < gene1.Count; k++)
+						geneCrossover[k] = UnityEngine.Random.Range(0, 1) == 0 ? gene1[k] : gene2[k];
+					
+					genesCrossover[j] = geneCrossover;
 				}
 
-				genesCrossover[j] = geneCrossover;
+				cromossomosCrossover[i] = new Cromossomo(genesCrossover);
 			}
 
 			qtdIndividuosGerados++;
-			Cromossomo cromossomoCrossover = new Cromossomo(genesCrossover);
-			individuo.Setar("Individuo_" + qtdIndividuosGerados, cromossomoCrossover);
-
-			Debug.Log(individuo.nome + ": " + individuo.cromossomo.ConverterBitArrayParaByte(individuo.cromossomo.genes[0]));
+			individuo.Setar("Individuo_" + qtdIndividuosGerados, cromossomosCrossover);
 		}
 	}
 
 	/**
 	 * TODO: Fazer o algoritmo de acordo com
 	 * o pseudocódigo da aula de mutação.
+	 * 
+	 * TODO: Talvez fazer isso junto com o for da seleção
+	 * ou deixar separado mesmo?
 	 */
 	void Mutacao(float fatorMutacao)
 	{
-		for(int i = 0; i < populacao.Count; i++)
-		{
-			Individuo individuo = populacao[0];
+		foreach(Individuo individuo in populacao)
+			foreach(Cromossomo cromossomo in individuo.cromossomos)
+				foreach(BitArray gene in cromossomo.genes)
+					for(int i = 0; i < gene.Count; i++)
+					{
+						float random = UnityEngine.Random.Range(0.0f, 1.0f);
 
-			foreach(BitArray gene in individuo.cromossomo.genes)
-				for(int j = 0; j < gene.Count; j++)
-				{
-					float random = UnityEngine.Random.Range(0.0f, 1.0f);
-
-					// Se tiver gerado um valor dentro do fator de
-					// mutação, faz um NOT no valor do bit.
-					if(random <= fatorMutacao)
-						gene[i] = !gene[i];
-				}	
-		}
+						// Se tiver gerado um valor dentro do fator de
+						// mutação, faz um NOT no valor do bit.
+						if(random <= fatorMutacao)
+							gene[i] = !gene[i];
+					}	
 	}
 
 	/**
@@ -302,18 +347,21 @@ public class AlgoritmoGenetico : MonoBehaviour
 
 		for(int i = 0; i < populacao.Count; i++)
 		{
+			Individuo individuo = populacao[i];
+
+			if(individuo.morto)
+				continue;
+
 			// Pegar as cores do primeiro, segundo e outras
 			// posições, se houverem.
 			int tamanhoCores = coresPosicoes.Length - 1;
 			int indexCor     = i < tamanhoCores ? i : tamanhoCores;
 
-			Individuo individuo = populacao[i];
-
 			// Setar a cor do carro e a prioridade da
 			// câmera (Para que possamos acompanhar ele)
 			// de acordo com a posição.
 			individuo.carroRenderer.material.color = coresPosicoes[indexCor];
-			individuo.cameraCinemachine.Priority   = i == 0 && !individuo.morto ? 1 : 0;
+			individuo.cameraCinemachine.Priority   = populacao.Count - i;
 		}
     }
 	// ────────────────────────────────────────────────────────────────────────────────

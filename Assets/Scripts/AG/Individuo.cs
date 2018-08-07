@@ -22,7 +22,18 @@ public class Individuo : MonoBehaviour
 	//
 
 	public string nome;
-	public Cromossomo cromossomo;
+
+	/**
+	 * Cromossomo 01 - A partir de qual valor do sensor o 
+	 * 	carro deve se mover.
+	 * 
+	 * Cromossomo 02 - Pesos dos genes do cromossomo 01.
+	 * 
+	 * Cromossomo 03 - Se o valor calculado a partir dos 
+	 * 	cromossomos 01 e 02 deve ser aplicado na 
+	 * 	horizontal ou vertical.
+	 */
+	public Cromossomo[] cromossomos;
 
 	public bool morto = false;
 
@@ -52,6 +63,12 @@ public class Individuo : MonoBehaviour
 	 */
 	public Renderer carroRenderer;
 
+	/**
+	 * Intervalo de checagem pra ver se o carro está
+	 * andando ou não para matar.
+	 */
+	private const float intervaloCheckMovendo = 2f;
+
 	// ────────────────────────────────────────────────────────────────────────────────
 
 	// Use this for initialization
@@ -60,6 +77,20 @@ public class Individuo : MonoBehaviour
 		controladorCarro = GetComponent<CarController>();
 		distanciaCarro   = GetComponent<DistanciaPercorrida>();
 		sensoresCarro    = GetComponent<SensoresCarro>();
+
+		InvokeRepeating("VerificarSeEstaMovendo", intervaloCheckMovendo, intervaloCheckMovendo);
+	}
+
+	/**
+	 * Função chamada a cada X segundos para
+	 * verificar se o carro está ou não se movendo.
+	 * 
+	 * Se estiver parado, ela mata o indivíduo.
+	 */
+	void VerificarSeEstaMovendo()
+	{
+		if(controladorCarro.CurrentSpeed <= 2)
+			Morrer();
 	}
 	
 	// Update is called once per frame
@@ -72,12 +103,12 @@ public class Individuo : MonoBehaviour
 	 * novo indivíduo pelo crossover.
 	 * 
 	 * @param nome - O nome do novo indivíduo.
-	 * @param cromossomo - O novo cromossomo do indivíduo.
+	 * @param cromossomos - Os novos cromossomos do indivíduo.
 	 */
-	public void Setar(String nome, Cromossomo cromossomo)
+	public void Setar(String nome, Cromossomo[] cromossomos)
 	{
-		this.nome = nome;
-		this.cromossomo = cromossomo;
+		this.nome        = nome;
+		this.cromossomos = cromossomos;
 	}
 
 	/**
@@ -87,42 +118,81 @@ public class Individuo : MonoBehaviour
     private void Mover()
     {
         float horizontal = 0f;
-		float vertical   = 1f;
+		float vertical   = 0f;
 
-		float sensorEsquerda    = sensoresCarro.distanciaSensores[0];
-		float sensorDigEsquerda = sensoresCarro.distanciaSensores[1];
-		float sensorFrente      = sensoresCarro.distanciaSensores[2];
-		float sensorDigDireita  = sensoresCarro.distanciaSensores[3];
-		float sensorDireita     = sensoresCarro.distanciaSensores[4];
-		float velocidade        = controladorCarro.CurrentSpeed;
+		int qtdCromossomos = cromossomos.Length;
+		int qtdGenes       = cromossomos[0].genes.Length;
 
-		byte[] genes = cromossomo.decodificar();
+		//
+		// ─── PEGAR OS SENSORES ───────────────────────────────────────────
+		//
 
-		if(genes[0] <= sensorEsquerda)
-			horizontal -= .5f;
+		float[] sensores = new float[qtdGenes];
+
+		for(int i = 0; i < qtdGenes - 1; i++)
+			sensores[i] = sensoresCarro.distanciaSensores[i];
+
+		sensores[qtdGenes - 1] = distanciaCarro.getDistanciaPercorrida();
+
+		//
+		// ─── PEGAR OS GENES ──────────────────────────────────────────────
+		//
+
+		byte[][] genes = new byte[cromossomos.Length][];
+
+		for(int i = 0; i < cromossomos.Length; i++)
+			genes[i] = cromossomos[i].decodificar();
+
+		byte[] gene01   = genes[0];
+		byte[] genePeso = genes[1];
+		byte[] geneHV   = genes[2];
+
+		//
+		// ─── COMPUTAR OS VALORES HORIZONTAIS E VERTICAIS ─────────────────
+		//
+
+		for(int i = 0; i < genes[0].Length; i++)
+		{
+			if(sensores[i] <= gene01[i])
+			{
+				float v = (gene01[i] - sensores[i]) / gene01[i] * (((int) genePeso[i]) - 2);
+
+				if(geneHV[i] < 50) horizontal += v;
+				else               vertical   += v;
+			}
+		}
+
+		/*if(sensorEsquerda <= genes[0])
+			horizontal += (genes[0] - sensorEsquerda) / genes[0] * 2;
 
 		if(genes[1] <= sensorDigEsquerda)
 		{
-			horizontal -= .25f;
-			vertical   -= .25f;
+			float v = (genes[1] - sensorDigEsquerda) / limiteSensor;
+			horizontal += v;
+			vertical   -= v;
 		}
 
 		if(genes[2] <= sensorFrente)
-			vertical   += .25f;
+			vertical -= (genes[2] - sensorFrente) / limiteSensor * 2;
 		
 		if(genes[3] <= sensorDigDireita)
 		{
-			horizontal += .25f;
-			vertical   -= .25f;
+			float v = (genes[3] - sensorDigDireita) / limiteSensor;
+			horizontal -= v;
+			vertical   -= v;
 		}
 
 		if(genes[4] <= sensorDireita)
-			horizontal += .5f;
+			horizontal -= (genes[4] - sensorDireita) / limiteSensor * 2;
 
 		if(genes[5] <= velocidade)
-			vertical += .2f;
+			vertical += (genes[5] - velocidade) / limiteVelocidade;*/
 
-		controladorCarro.Move(horizontal, vertical, 1f, 0f);
+		//
+		// ─── APLICAR NO CARRO ────────────────────────────────────────────
+		//
+
+		controladorCarro.Move(horizontal, vertical, vertical, 0f);
 		//controladorCarro.Move(steering, accel, footbrake, handbrake);
     }
 

@@ -56,6 +56,8 @@ public class Cromossomo
 
 	/**
 	 * TODO: Fazer a decodificação de acordo com o pseudocódigo.
+	 * 
+	 * TODO: Decodificar para int ao invés de byte.
 	 */
 	public byte[] decodificar()
 	{
