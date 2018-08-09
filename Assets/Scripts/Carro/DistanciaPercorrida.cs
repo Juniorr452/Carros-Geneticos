@@ -24,10 +24,9 @@ public class DistanciaPercorrida : MonoBehaviour
 	 */
 	private void AtualizarDistanciaPercorrida()
     {
-		// TODO: Talvez desconsiderar a distância vertical.
 		Vector3 posicaoAtual = transform.position;
 
-		float distanciaCalculada = (posicaoAtual - posicaoAnterior).magnitude;
+		float distanciaCalculada = Vector3.Distance(posicaoAtual, posicaoAnterior);
 
 		posicaoAnterior = posicaoAtual;
 
