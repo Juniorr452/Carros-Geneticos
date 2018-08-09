@@ -28,8 +28,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	// ─── INFORMAÇÃO DOS INDIVÍDUOS ──────────────────────────────────────────────────
 	//
 
-	[SerializeField]
-	private int geracaoAtual = 1;
+	public int geracaoAtual = 1;
 
 	public List<Individuo> populacao;
 
@@ -42,8 +41,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	[SerializeField]
 	private int qtdIndividuosGerados = 0;
 
-	[SerializeField]
-	private int qtdIndividuosMortos;
+	public int qtdIndividuosMortos;
 
 	//
 	// ─── GENES E LIMITES DOS VALORES ────────────────────────────────────────────────
