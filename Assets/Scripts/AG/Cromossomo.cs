@@ -55,7 +55,8 @@ public class Cromossomo
 	}
 
 	/**
-	 * TODO: Fazer a decodificação de acordo com o pseudocódigo.
+	 * Baseado no pseudocódigo fornecido
+	 * na aula de codificação.
 	 */
 	public int[] decodificar()
 	{
