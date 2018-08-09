@@ -359,8 +359,11 @@ public class AlgoritmoGenetico : MonoBehaviour
 			Individuo individuo = populacao[i];
 
 			if(individuo.morto)
+			{
+				individuo.cameraCinemachine.Priority = 0;
 				continue;
-
+			}
+				
 			// Pegar as cores do primeiro, segundo e outras
 			// posições, se houverem.
 			int tamanhoCores = coresPosicoes.Length - 1;
