@@ -82,8 +82,8 @@ public class Cromossomo
 		 * para codificar nossos genes.
 		 */
 		int[] valoresEmInt = new int[1];
-    	bits.CopyTo(valoresEmInt, 0);
-    	return valoresEmInt[0];
+		bits.CopyTo(valoresEmInt, 0);
+		return valoresEmInt[0];
 	}
 
 	private String ConverterBitArrayParaString(BitArray bits)
