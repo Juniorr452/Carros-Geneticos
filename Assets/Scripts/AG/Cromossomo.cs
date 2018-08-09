@@ -56,17 +56,15 @@ public class Cromossomo
 
 	/**
 	 * TODO: Fazer a decodificação de acordo com o pseudocódigo.
-	 * 
-	 * TODO: Decodificar para int ao invés de byte.
 	 */
-	public byte[] decodificar()
+	public int[] decodificar()
 	{
-		byte[] bytes = new byte[genes.Length];
+		int[] genesInt = new int[genes.Length];
 
 		for(int i = 0; i < genes.Length; i++)
-			bytes[i] = ConverterBitArrayParaByte(genes[i]);
+			genesInt[i] = ConverterBitArrayParaInt(genes[i]);
 
-		return bytes;
+		return genesInt;
 	}
 
 	//
@@ -76,15 +74,15 @@ public class Cromossomo
 	/**
 	 * https://stackoverflow.com/questions/45759398/byte-to-bitarray-and-back-to-byte
 	 */
-	public byte ConverterBitArrayParaByte(BitArray bits)
+	public int ConverterBitArrayParaInt(BitArray bits)
 	{
 		/**
-		 * New byte[1] pq estamos usando apenas 8 bits
+		 * New int[1] pq estamos usando apenas 8 bits
 		 * para codificar nossos genes.
 		 */
-		var bytes = new byte[1];
-    	bits.CopyTo(bytes, 0);
-    	return bytes[0];
+		int[] valoresEmInt = new int[1];
+    	bits.CopyTo(valoresEmInt, 0);
+    	return valoresEmInt[0];
 	}
 
 	private String ConverterBitArrayParaString(BitArray bits)

@@ -142,14 +142,14 @@ public class Individuo : MonoBehaviour
 		// ─── PEGAR OS GENES ──────────────────────────────────────────────
 		//
 
-		byte[][] genes = new byte[cromossomos.Length][];
+		int[][] genes = new int[cromossomos.Length][];
 
 		for(int i = 0; i < cromossomos.Length; i++)
 			genes[i] = cromossomos[i].decodificar();
 
-		byte[] geneLimite = genes[0];
-		byte[] genePeso   = genes[1];
-		byte[] geneHV     = genes[2];
+		int[] geneLimite = genes[0];
+		int[] genePeso   = genes[1];
+		int[] geneHV     = genes[2];
 
 		//
 		// ─── COMPUTAR OS VALORES HORIZONTAIS E VERTICAIS ─────────────────
@@ -159,7 +159,7 @@ public class Individuo : MonoBehaviour
 		{
 			if(sensores[i] <= geneLimite[i])
 			{
-				float v = (geneLimite[i] - sensores[i]) / geneLimite[i] * (((int) genePeso[i]) - 2);
+				float v = (geneLimite[i] - sensores[i]) / geneLimite[i] * (genePeso[i] - 2);
 
 				if(geneHV[i] < 50) horizontal += v;
 				else               vertical   += v;
