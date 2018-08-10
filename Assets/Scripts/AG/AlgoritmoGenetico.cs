@@ -183,15 +183,60 @@ public class AlgoritmoGenetico : MonoBehaviour
 	 */
     void Selecao()
 	{
+		List<float> porcentagens = new List<float>();
+		float pAnterior = 0;
+
 		populacao.Sort(Individuo.OrdenarPelaDistanciaPercorrida);
 
 		individuosSelecionados.Clear();
 
-		for(int i = 0; i < qtdIndividuosASelecionar; i++)
+		// Calcular o fitness total
+		float fitnessTotal = calcularFitnessGeral();
+		
+		// Calcular a probabilidade.
+		
+
+		// Ou entao ja calculara a probabilidade e fazer o range ja
+
+		// for ate qtdindividuosselecionar
+		// gerar numero randomico entre 0 e 100
+		// ver onde caiu o range e add na lista de selecionados
+
+		for(int i = 0; i < tamanhoPopulacao; i++)
+		{
+			pAnterior += populacao[i].calcularFitness() / fitnessTotal;
+			porcentagens.Add(pAnterior);
+		}
+
+		for (int i = 0; i < tamanhoPopulacao; i++)
+			for (int j = 0; j < tamanhoPopulacao; j++)
+			{
+				float random = UnityEngine.Random.Range(0f, 1f);
+
+				if(random <= porcentagens[j] && individuosSelecionados.Count < 2)
+				{
+					//individuosSelecionados.Add(populacao[i]);
+					populacao[j].pontuacaoSelecaoRoleta++;
+				}			
+			}
+
+		populacao.Sort(Individuo.OrdenarPelaPontuacaoSelecao);
+
+		for (int i = 0; i < qtdIndividuosASelecionar; i++)
 		{
 			individuosSelecionados.Add(populacao[i]);
 			populacao.RemoveAt(i);
 		}
+	}
+
+	private float calcularFitnessGeral()
+	{
+		float fitnessSoma = 0;
+
+		foreach(Individuo individuo in populacao)
+			fitnessSoma += individuo.calcularFitness();
+		
+		return fitnessSoma;
 	}
 
 	/**
