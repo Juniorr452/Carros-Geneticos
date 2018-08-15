@@ -35,6 +35,8 @@ public class Individuo : MonoBehaviour
 	 */
 	public Cromossomo[] cromossomos;
 
+	public int pontuacaoSelecaoRoleta = 0;
+
 	public bool morto = false;
 
 	//
@@ -234,6 +236,10 @@ public class Individuo : MonoBehaviour
 		}
     }
 
+	public float calcularFitness(){
+		return distanciaCarro.getDistanciaPercorrida();
+	}
+
 	//
 	// ─── COMPARADOR ─────────────────────────────────────────────────────────────────
 	//
@@ -242,6 +248,14 @@ public class Individuo : MonoBehaviour
 	{
 		float d1 = i1.distanciaCarro.getDistanciaPercorrida();
 		float d2 = i2.distanciaCarro.getDistanciaPercorrida();
+
+    	return d2.CompareTo(d1);
+ 	}
+
+	public static int OrdenarPelaPontuacaoSelecao(Individuo i1, Individuo i2) 
+	{
+		float d1 = i1.pontuacaoSelecaoRoleta;
+		float d2 = i2.pontuacaoSelecaoRoleta;
 
     	return d2.CompareTo(d1);
  	}
