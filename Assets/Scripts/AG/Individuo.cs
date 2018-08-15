@@ -218,7 +218,9 @@ public class Individuo : MonoBehaviour
 		transform.position = posicao.position;
 		transform.rotation = posicao.rotation;
 
+		// Resetar distância e pontuação da roleta.
 		distanciaCarro.ResetarDistancia(posicao.position);
+		this.pontuacaoSelecaoRoleta = 0;
     }
 
 	/**
