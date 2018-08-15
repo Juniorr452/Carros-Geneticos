@@ -24,6 +24,9 @@ public class AlgoritmoGenetico : MonoBehaviour
 	[Range(2, 6)]
 	public int qtdIndividuosASelecionar = 2;
 
+	[Range(1, 100)]
+	public int qtdVezesRoleta = 10;
+
 	//
 	// ─── INFORMAÇÃO DOS INDIVÍDUOS ──────────────────────────────────────────────────
 	//
@@ -178,8 +181,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	}
 
 	/**
-	 * TODO: Fazer seleção com o 
-	 * pseudocódigo da aula de seleção. 
+	 * Seleção de indivíduos utilizando o método da roleta.
 	 */
     void Selecao()
 	{
@@ -190,17 +192,8 @@ public class AlgoritmoGenetico : MonoBehaviour
 
 		individuosSelecionados.Clear();
 
-		// Calcular o fitness total
+		// Calcular o fitness total.
 		float fitnessTotal = calcularFitnessGeral();
-		
-		// Calcular a probabilidade.
-		
-
-		// Ou entao ja calculara a probabilidade e fazer o range ja
-
-		// for ate qtdindividuosselecionar
-		// gerar numero randomico entre 0 e 100
-		// ver onde caiu o range e add na lista de selecionados
 
 		for(int i = 0; i < tamanhoPopulacao; i++)
 		{
@@ -208,18 +201,23 @@ public class AlgoritmoGenetico : MonoBehaviour
 			porcentagens.Add(pAnterior);
 		}
 
-		for (int i = 0; i < tamanhoPopulacao; i++)
-			for (int j = 0; j < tamanhoPopulacao; j++)
-			{
-				float random = UnityEngine.Random.Range(0f, 1f);
+		// Girar a roleta.
+		for(int i = 0; i < qtdVezesRoleta; i++)
+		{
+			float random = UnityEngine.Random.Range(0f, 1f);
 
-				if(random <= porcentagens[j] && individuosSelecionados.Count < 2)
+			for(int j = 0; j < tamanhoPopulacao; j++)
+				if(random <= porcentagens[j])
 				{
-					//individuosSelecionados.Add(populacao[i]);
 					populacao[j].pontuacaoSelecaoRoleta++;
-				}			
-			}
-
+					break;
+				}	
+		}
+			
+		/**
+		 * Ordenar e selecionar os indivíduos que obtiveram
+		 * as maiores pontuações na roleta.
+		 */
 		populacao.Sort(Individuo.OrdenarPelaPontuacaoSelecao);
 
 		for (int i = 0; i < qtdIndividuosASelecionar; i++)
