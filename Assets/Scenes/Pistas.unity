@@ -156,7 +156,7 @@ MonoBehaviour:
   tamanhoPopulacao: 50
   fatorMutacao: 0.1
   qtdIndividuosASelecionar: 2
-  qtdVezesRoleta: 10
+  qtdVezesRoleta: 60
   geracaoAtual: 1
   populacao: []
   individuosSelecionados: []
@@ -306,7 +306,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 388464203}
-  m_LocalRotation: {x: 0.013430223, y: 1.14643356e-11, z: -9.074391e-13, w: 0.9999099}
+  m_LocalRotation: {x: 0.01343024, y: 1.14643356e-11, z: -9.0744437e-13, w: 0.9999099}
   m_LocalPosition: {x: -1.393404, y: 1.4852207, z: -5.811773}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -500,7 +500,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 506882721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 70}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -625,7 +625,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4373620311627152, guid: 2d9aca8c8fd038d41a3c0f84757a33a2, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.013430223
+      value: 0.01343024
       objectReference: {fileID: 0}
     - target: {fileID: 4373620311627152, guid: 2d9aca8c8fd038d41a3c0f84757a33a2, type: 2}
       propertyPath: m_LocalRotation.y
@@ -633,7 +633,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4373620311627152, guid: 2d9aca8c8fd038d41a3c0f84757a33a2, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -9.074391e-13
+      value: -9.0744437e-13
       objectReference: {fileID: 0}
     - target: {fileID: 4373620311627152, guid: 2d9aca8c8fd038d41a3c0f84757a33a2, type: 2}
       propertyPath: m_LocalRotation.w
@@ -845,7 +845,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 65167439285110880, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65554313657090388, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 
@@ -857,7 +857,7 @@ Prefab:
       value: 
       objectReference: {fileID: 13400000, guid: 67db31eead11e8d6d00011d98d76c639,
         type: 2}
-    - target: {fileID: 65554313657090388, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65167439285110880, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 
