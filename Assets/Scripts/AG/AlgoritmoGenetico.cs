@@ -67,7 +67,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	/**
 	 * Quantidade de genes por cromossomo.
 	 */
-	private const int qtdGenes = 6;
+	private const int qtdGenes = 7;
 
 	/**
 	 * TODO: Otimizar aqui e na codificação do cromossomo.
@@ -76,28 +76,33 @@ public class AlgoritmoGenetico : MonoBehaviour
 	private float[][][] limitesInfSupCromo = new float[qtdCromossomos][][]
 	{
 		new float[qtdGenes][] {
-			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Esquerda
-			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Esquerda
-			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Frente
-			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Direita
-			new float[] {0, SensoresCarro.tamanhoRaycast}, // Sensor Parede Direita
-			new float[] {10, 60}                            // Velocidade do Carro
+			new float[] {0, SensoresCarro.tamanhoRaycast / 2}, // Sensor Parede Diagonal Esquerda
+			new float[] {0, SensoresCarro.tamanhoRaycast / 2}, // Sensor Parede Frente
+			new float[] {0, SensoresCarro.tamanhoRaycast / 2}, // Sensor Parede Diagonal Direita
+
+			new float[] {SensoresCarro.tamanhoRaycast / 2, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Esquerda 2
+			new float[] {SensoresCarro.tamanhoRaycast / 2, SensoresCarro.tamanhoRaycast}, // Sensor Parede Frente 2
+			new float[] {SensoresCarro.tamanhoRaycast / 2, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Direita 2
+
+			new float[] {10, 55} // Velocidade do Carro
 		},
 		/**
-		 * Esses valores serão substraídos por 2.
+		 * Esses valores serão substraídos por 1.
 		 * 
 		 * Não coloquei negativo pq estamos codificando
 		 * em binário unsigned
 		 */
 		new float[qtdGenes][]{
-			new float[] {0, 4},
-			new float[] {0, 4},
-			new float[] {0, 4},
-			new float[] {0, 4},
-			new float[] {0, 4},
-			new float[] {0, 4}
+			new float[] {0, 2},
+			new float[] {0, 2},
+			new float[] {0, 2},
+			new float[] {0, 2},
+			new float[] {0, 2},
+			new float[] {0, 2},
+			new float[] {0, 2}
 		},
 		new float[qtdGenes][]{
+			new float[] {0, 100},
 			new float[] {0, 100},
 			new float[] {0, 100},
 			new float[] {0, 100},
@@ -188,7 +193,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 		List<float> porcentagens = new List<float>();
 		float pAnterior = 0;
 
-		populacao.Sort(Individuo.OrdenarPelaDistanciaPercorrida);
+		populacao.Sort(Individuo.OrdenarPelaPontuacao);
 
 		individuosSelecionados.Clear();
 
@@ -393,7 +398,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 	 */
 	private void VerificarPosicoesCarro()
     {
-        populacao.Sort(Individuo.OrdenarPelaDistanciaPercorrida);
+        populacao.Sort(Individuo.OrdenarPelaPontuacao);
 
 		for(int i = 0; i < populacao.Count; i++)
 		{

@@ -9,8 +9,8 @@ public class SensoresCarro : MonoBehaviour
 	// ─── PARÂMETROS DOS SENSORES ────────────────────────────────────────────────────
 	//
 
-	public static float   tamanhoRaycast  = 100f;
-	public        int     qtdSensores     = 5;
+	private       int     qtdSensores     = 3;
+	public static float   tamanhoRaycast  = 50f;
 	public        bool    desenharRaycast = true;
 
 	/**
@@ -75,15 +75,11 @@ public class SensoresCarro : MonoBehaviour
 	 */
     private void AtualizarDirecaoSensores()
     {
-        // Esquerda
-		direcaoSensores[0] = -transform.right;
 		// Diagonal Esquerda
-		direcaoSensores[1] = Quaternion.AngleAxis(-45, transform.up) * transform.forward;
+		direcaoSensores[0] = Quaternion.AngleAxis(-45, transform.up) * transform.forward;
 		// Frente
-		direcaoSensores[2] = transform.forward;
+		direcaoSensores[1] = transform.forward;
 		// Diagonal Direita
-		direcaoSensores[3] = Quaternion.AngleAxis(45, transform.up) * transform.forward;
-		// Direita
-		direcaoSensores[4] = transform.right;
+		direcaoSensores[2] = Quaternion.AngleAxis(45, transform.up) * transform.forward;
     }
 }

@@ -48,7 +48,7 @@ public class Individuo : MonoBehaviour
 	 */
 	private CarController controladorCarro;
 
-	private DistanciaPercorrida distanciaCarro;
+	private CalculadorPontuacao calculadorPontuacao;
 	private SensoresCarro       sensoresCarro;
 
 	//
@@ -69,18 +69,18 @@ public class Individuo : MonoBehaviour
 	 * Intervalo de checagem pra ver se o carro está
 	 * andando ou não para matar.
 	 */
-	private const float intervaloCheckMovendo = 2f;
+	private const float intervaloCheckMovendo = .5f;
 
 	// ────────────────────────────────────────────────────────────────────────────────
 
 	// Use this for initialization
 	void Start () 
 	{
-		controladorCarro = GetComponent<CarController>();
-		distanciaCarro   = GetComponent<DistanciaPercorrida>();
-		sensoresCarro    = GetComponent<SensoresCarro>();
+		controladorCarro    = GetComponent<CarController>();
+		calculadorPontuacao = GetComponent<CalculadorPontuacao>();
+		sensoresCarro       = GetComponent<SensoresCarro>();
 
-		InvokeRepeating("VerificarSeEstaMovendo", intervaloCheckMovendo, intervaloCheckMovendo);
+		InvokeRepeating("VerificarSeEstaMovendo", 3f, intervaloCheckMovendo);
 	}
 
 	/**
@@ -135,10 +135,8 @@ public class Individuo : MonoBehaviour
 
 		float[] sensores = new float[qtdGenes];
 
-		for(int i = 0; i < qtdGenes - 1; i++)
+		for(int i = 0; i < (qtdGenes - 1) / 2; i++)
 			sensores[i] = sensoresCarro.distanciaSensores[i];
-
-		sensores[qtdGenes - 1] = distanciaCarro.getDistanciaPercorrida();
 
 		//
 		// ─── PEGAR OS GENES ──────────────────────────────────────────────
@@ -157,16 +155,25 @@ public class Individuo : MonoBehaviour
 		// ─── COMPUTAR OS VALORES HORIZONTAIS E VERTICAIS ─────────────────
 		//
 
-		for(int i = 0; i < genes[0].Length; i++)
+		for(int i = 0, j = 3; i < (qtdGenes - 1) / 2; i++, j++)
 		{
-			if(sensores[i] <= geneLimite[i])
-			{
-				float v = (geneLimite[i] - sensores[i]) / geneLimite[i] * (genePeso[i] - 2);
+			float v = 0;
 
-				if(geneHV[i] < 50) horizontal += v;
-				else               vertical   += v;
-			}
+			if(sensores[i] <= geneLimite[i])
+				v = formula(sensores[i], geneLimite[i], genePeso[i]);
+			else if(sensores[i] > geneLimite[j])
+				v = formula(sensores[i], geneLimite[j], genePeso[j]);
+
+			if(geneHV[i] < 50) 
+				horizontal += v;
+			else               
+				vertical   += v;
 		}
+
+		// Computar velocidade
+		int indexVel = qtdGenes - 1;
+		if(controladorCarro.CurrentSpeed < geneLimite[indexVel])
+			horizontal -= formula(sensores[indexVel], geneLimite[indexVel], genePeso[indexVel]);
 
 		/*if(sensorEsquerda <= genes[0])
 			horizontal += (genes[0] - sensorEsquerda) / genes[0] * 2;
@@ -203,6 +210,10 @@ public class Individuo : MonoBehaviour
 		//controladorCarro.Move(steering, accel, footbrake, handbrake);
     }
 
+	private float formula(float sensor, float limite, float peso){
+		return (limite - sensor) / limite * (peso - 1);
+	}
+
 	/**
 	 * Reseta a física, posição e rotação do
 	 * objeto para um ponto.
@@ -218,8 +229,8 @@ public class Individuo : MonoBehaviour
 		transform.position = posicao.position;
 		transform.rotation = posicao.rotation;
 
-		// Resetar distância e pontuação da roleta.
-		distanciaCarro.ResetarDistancia(posicao.position);
+		// Resetar pontuação do carro e pontuação da roleta.
+		calculadorPontuacao.pontuacao = 0;
 		this.pontuacaoSelecaoRoleta = 0;
     }
 
@@ -239,19 +250,19 @@ public class Individuo : MonoBehaviour
     }
 
 	public float calcularFitness(){
-		return distanciaCarro.getDistanciaPercorrida();
+		return calculadorPontuacao.pontuacao;
 	}
 
 	//
 	// ─── COMPARADOR ─────────────────────────────────────────────────────────────────
 	//
 
-	public static int OrdenarPelaDistanciaPercorrida(Individuo i1, Individuo i2) 
+	public static int OrdenarPelaPontuacao(Individuo i1, Individuo i2) 
 	{
-		float d1 = i1.distanciaCarro.getDistanciaPercorrida();
-		float d2 = i2.distanciaCarro.getDistanciaPercorrida();
+		float p1 = i1.calculadorPontuacao.pontuacao;
+		float p2 = i2.calculadorPontuacao.pontuacao;
 
-    	return d2.CompareTo(d1);
+    	return p2.CompareTo(p1);
  	}
 
 	public static int OrdenarPelaPontuacaoSelecao(Individuo i1, Individuo i2) 
