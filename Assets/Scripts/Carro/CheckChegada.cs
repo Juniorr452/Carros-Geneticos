@@ -28,11 +28,7 @@ public class CheckChegada : MonoBehaviour
 
 			case "Chegada":
 				if(passouDoMeioDaPista)
-				{
-					Debug.Log("MORRI");
 					individuo.Morrer();
-				}
-					
 				break;
 		}
 	}
