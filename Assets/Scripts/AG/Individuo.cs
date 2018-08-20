@@ -69,7 +69,7 @@ public class Individuo : MonoBehaviour
 	 * Intervalo de checagem pra ver se o carro está
 	 * andando ou não para matar.
 	 */
-	private const float intervaloCheckMovendo = .5f;
+	private const float intervaloCheckMovendo = 1f;
 
 	// ────────────────────────────────────────────────────────────────────────────────
 
@@ -80,7 +80,7 @@ public class Individuo : MonoBehaviour
 		calculadorPontuacao = GetComponent<CalculadorPontuacao>();
 		sensoresCarro       = GetComponent<SensoresCarro>();
 
-		InvokeRepeating("VerificarSeEstaMovendo", 3f, intervaloCheckMovendo);
+		InvokeRepeating("VerificarSeEstaMovendo", intervaloCheckMovendo * 3, intervaloCheckMovendo);
 	}
 
 	/**

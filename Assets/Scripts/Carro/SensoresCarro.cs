@@ -20,6 +20,12 @@ public class SensoresCarro : MonoBehaviour
 	 */
 	public Vector3 offsetRaycast = new Vector3(0, .5f, 0);
 
+	/**
+	 * Máscara para o sensor detectar apenas
+	 * as paredes.
+	 */
+	public LayerMask layerMaskSensor;
+
 	//
 	// ─── SENSORES DE DISTÂNCIA ENTRE O CARRO E AS PAREDES ───────────────────────────
 	//
@@ -58,9 +64,8 @@ public class SensoresCarro : MonoBehaviour
 			Vector3 posInicialRaycast = transform.position + offsetRaycast;
 
 			distanciaSensores[i] = tamanhoRaycast;
-			if (Physics.Raycast(posInicialRaycast, direcao, out hit, tamanhoRaycast))
-			{
-				//TODO: Verificar se o alvo atingido é uma parede
+			if (Physics.Raycast(posInicialRaycast, direcao, out hit, tamanhoRaycast, layerMaskSensor))
+			{	
 				distanciaSensores[i] = hit.distance;
 
 				if(desenharRaycast)
