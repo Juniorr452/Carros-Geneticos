@@ -85,7 +85,7 @@ public class Cromossomo
 		return valoresEmInt[0];
 	}
 
-	private String ConverterBitArrayParaString(BitArray bits)
+	public String ConverterBitArrayParaString(BitArray bits)
 	{
 		String s = "";
 

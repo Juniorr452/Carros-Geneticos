@@ -289,17 +289,16 @@ public class AlgoritmoGenetico : MonoBehaviour
 	}
 
 	/**
-	 * TODO: Fazer o algoritmo de acordo com
-	 * o pseudocódigo da aula de mutação.
-	 * 
-	 * TODO: Talvez fazer isso junto com o for da seleção
-	 * ou deixar separado mesmo?
+	 * Mutação de indivíduos com flip de bits.
 	 */
 	void Mutacao(float fatorMutacao)
 	{
 		foreach(Individuo individuo in populacao)
 			foreach(Cromossomo cromossomo in individuo.cromossomos)
 				foreach(BitArray gene in cromossomo.genes)
+				{
+					//Debug.Log("Ant: " + cromossomo.ConverterBitArrayParaString(cromossomo.genes[0]));
+
 					for(int i = 0; i < gene.Count; i++)
 					{
 						float random = UnityEngine.Random.Range(0.0f, 1.0f);
@@ -308,7 +307,11 @@ public class AlgoritmoGenetico : MonoBehaviour
 						// mutação, faz um NOT no valor do bit.
 						if(random <= fatorMutacao)
 							gene[i] = !gene[i];
-					}	
+					}
+
+					//Debug.Log("Dps: " + cromossomo.ConverterBitArrayParaString(cromossomo.genes[0]));
+				}
+						
 	}
 
 	/**
