@@ -4,11 +4,6 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-/**
- * TODO: Fazer um cálculo de pontuação em que
- * favoreça os carros que estiverem mais no centro
- * da pista.
- */
 public class AlgoritmoGenetico : MonoBehaviour 
 {
 	//
@@ -51,8 +46,6 @@ public class AlgoritmoGenetico : MonoBehaviour
 	//
 
 	/**
-	 * TODO: Pensar numa estrutura de genes melhor.
-	 * 
 	 * Cromossomo 01 - A partir de qual valor do sensor o 
 	 * 	carro deve se mover.
 	 * 
@@ -84,7 +77,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 			new float[] {SensoresCarro.tamanhoRaycast / 2, SensoresCarro.tamanhoRaycast}, // Sensor Parede Frente 2
 			new float[] {SensoresCarro.tamanhoRaycast / 2, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Direita 2
 
-			new float[] {10, 60} // Velocidade do Carro
+			new float[] {10, 63} // Velocidade do Carro
 		},
 		/**
 		 * Esses valores serão substraídos por 1.
@@ -243,15 +236,14 @@ public class AlgoritmoGenetico : MonoBehaviour
 	}
 
 	/**
-	 * TODO: Fazer crossover com o 
-	 * pseudocódigo da aula de crossover.
+	 * Cruzamento de ponto único.
 	 */
 	void CrossOver()
 	{
 		// Selecionando só 2 indivíduos por enquanto...
 		Cromossomo[] cromossomos1 = individuosSelecionados[0].cromossomos;
 		Cromossomo[] cromossomos2 = individuosSelecionados[1].cromossomos;
-
+		
 		foreach(Individuo individuo in populacao)
 		{
 			Cromossomo[] cromossomosCrossover = new Cromossomo[qtdCromossomos];
@@ -268,14 +260,19 @@ public class AlgoritmoGenetico : MonoBehaviour
 				// Para cada gene
 				for(int j = 0; j < qtdGenes; j++)
 				{
+					int ponto = UnityEngine.Random.Range(0, Cromossomo.qtdBits);
+					
 					BitArray gene1 = cromossomo1.genes[j];
 					BitArray gene2 = cromossomo2.genes[j];
 
-					BitArray geneCrossover = new BitArray(8);
+					BitArray geneCrossover = new BitArray(6);
 
-					// Para cada alelo
-					for(int k = 0; k < gene1.Count; k++)
-						geneCrossover[k] = UnityEngine.Random.Range(0, 1) == 0 ? gene1[k] : gene2[k];
+					// Antes e depois do ponto
+					for(int k = 0; k < ponto; k++)
+						geneCrossover[k] = gene1[k];
+
+					for(int k = ponto; k < gene1.Count; k++)
+						geneCrossover[k] = gene2[k];
 					
 					genesCrossover[j] = geneCrossover;
 				}
@@ -409,7 +406,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 
 			if(individuo.morto)
 			{
-				individuo.cameraCinemachine.Priority = 0;
+				individuo.cameraCinemachine.Priority = -1;
 				continue;
 			}
 				

@@ -13,7 +13,7 @@ public class Cromossomo
 	/**
 	 * Quantidade de bits para cada gene.
 	 */
-	private const int qtdBits = 6;
+	public const int qtdBits = 6;
 
 	//
 	// ─── CONSTRUTORES ───────────────────────────────────────────────────────────────
