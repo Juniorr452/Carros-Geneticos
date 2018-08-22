@@ -391,8 +391,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 388464203}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.393404, y: -1.4647794, z: -70}
+  m_LocalRotation: {x: 0.013430223, y: 1.14643356e-11, z: -9.074633e-13, w: 0.9999099}
+  m_LocalPosition: {x: -1.393404, y: 1.4852207, z: -6.7299995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 131402877}
@@ -457,7 +457,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 74.8
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -920,7 +920,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4373620311627152, guid: 2d9aca8c8fd038d41a3c0f84757a33a2, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -9.074626e-13
+      value: -9.074633e-13
       objectReference: {fileID: 0}
     - target: {fileID: 4373620311627152, guid: 2d9aca8c8fd038d41a3c0f84757a33a2, type: 2}
       propertyPath: m_LocalRotation.w
@@ -1132,7 +1132,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 65167439285110880, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65554313657090388, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 
@@ -1144,7 +1144,7 @@ Prefab:
       value: 
       objectReference: {fileID: 13400000, guid: 67db31eead11e8d6d00011d98d76c639,
         type: 2}
-    - target: {fileID: 65554313657090388, guid: 28706e79144fff845bf3efcbb29a32cf,
+    - target: {fileID: 65167439285110880, guid: 28706e79144fff845bf3efcbb29a32cf,
         type: 2}
       propertyPath: m_Material
       value: 

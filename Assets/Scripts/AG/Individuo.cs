@@ -164,7 +164,7 @@ public class Individuo : MonoBehaviour
 			else if(sensores[i] > geneLimite[j])
 				v = formula(sensores[i], geneLimite[j], genePeso[j]);
 
-			if(geneHV[i] < 50) 
+			if(geneHV[i] < 25) 
 				horizontal += v;
 			else               
 				vertical   += v;

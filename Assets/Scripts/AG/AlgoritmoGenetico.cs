@@ -84,7 +84,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 			new float[] {SensoresCarro.tamanhoRaycast / 2, SensoresCarro.tamanhoRaycast}, // Sensor Parede Frente 2
 			new float[] {SensoresCarro.tamanhoRaycast / 2, SensoresCarro.tamanhoRaycast}, // Sensor Parede Diagonal Direita 2
 
-			new float[] {10, 55} // Velocidade do Carro
+			new float[] {10, 60} // Velocidade do Carro
 		},
 		/**
 		 * Esses valores serão substraídos por 1.
@@ -102,13 +102,13 @@ public class AlgoritmoGenetico : MonoBehaviour
 			new float[] {0, 2}
 		},
 		new float[qtdGenes][]{
-			new float[] {0, 100},
-			new float[] {0, 100},
-			new float[] {0, 100},
-			new float[] {0, 100},
-			new float[] {0, 100},
-			new float[] {0, 100},
-			new float[] {0, 100}
+			new float[] {0, 50},
+			new float[] {0, 50},
+			new float[] {0, 50},
+			new float[] {0, 50},
+			new float[] {0, 50},
+			new float[] {0, 50},
+			new float[] {0, 50}
 		}
 	};
 

@@ -13,7 +13,7 @@ public class Cromossomo
 	/**
 	 * Quantidade de bits para cada gene.
 	 */
-	private const int qtdBits = 8;
+	private const int qtdBits = 6;
 
 	//
 	// ─── CONSTRUTORES ───────────────────────────────────────────────────────────────
@@ -48,9 +48,8 @@ public class Cromossomo
 			float random = UnityEngine.Random.Range(inf, sup);
 
 			float aux = ((random - inf) / (sup - inf)) * (Mathf.Pow(2, qtdBits) - 1);
-			byte baux = Convert.ToByte(random);
 
-			genes[i] = new BitArray(new byte[] { baux });
+			genes[i] = ConverterFloatParaBitArray(random, qtdBits);
 		}
 	}
 
@@ -106,6 +105,19 @@ public class Cromossomo
 		}
 
 		return s;
+	}
+
+	private BitArray ConverterFloatParaBitArray(float f, int qtdBits)
+	{
+		byte aux = Convert.ToByte(f);
+
+		BitArray baux = new BitArray(new byte[]{ aux });
+		BitArray bits = new BitArray(qtdBits);
+
+		for(int i = 0; i < qtdBits; i++)
+			bits[i] = baux[i];
+
+		return bits;
 	}
 	// ────────────────────────────────────────────────────────────────────────────────
 }
