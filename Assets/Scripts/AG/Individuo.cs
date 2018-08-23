@@ -250,7 +250,7 @@ public class Individuo : MonoBehaviour
     }
 
 	public float calcularFitness(){
-		return calculadorPontuacao.pontuacao;
+		return calculadorPontuacao.pontuacao > 0.1 ? calculadorPontuacao.pontuacao : 0.1f;
 	}
 
 	//

@@ -220,8 +220,9 @@ public class AlgoritmoGenetico : MonoBehaviour
 
 		for (int i = 0; i < qtdIndividuosASelecionar; i++)
 		{
-			individuosSelecionados.Add(populacao[i]);
-			populacao.RemoveAt(i);
+			Individuo ind = populacao[0];
+			individuosSelecionados.Add(populacao[0]);
+			populacao.RemoveAt(0);
 		}
 	}
 
