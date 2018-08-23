@@ -77,7 +77,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 			new float[] {10, 63} // Velocidade do Carro
 		},
 		/**
-		 * Esses valores serão substraídos por 63.
+		 * Esses valores serão substraídos por 31.
 		 * 
 		 * Não coloquei negativo pq estamos codificando
 		 * em binário unsigned.
