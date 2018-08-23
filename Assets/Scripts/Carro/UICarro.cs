@@ -60,7 +60,8 @@ public class UICarro : MonoBehaviour
 		sbInfoCarro.Append("Pontuação: ");
 		sbInfoCarro.Append(calculadorPontuacao.pontuacao.ToString("0.0"));
 
-		sbHV.Append("h: ");
+		// Output pra mover o carro
+		sbHV.Append("\nh: ");
 		sbHV.AppendLine(individuo.horizontal.ToString("0.0"));
 		sbHV.Append("v: ");
 		sbHV.AppendLine(individuo.vertical.ToString("0.0"));

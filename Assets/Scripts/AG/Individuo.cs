@@ -208,13 +208,12 @@ public class Individuo : MonoBehaviour
 		// ─── APLICAR NO CARRO ────────────────────────────────────────────
 		//
 
-		// TODO: Não deixar o carro dar ré.
 		controladorCarro.Move(horizontal, vertical, vertical, 0f);
 		//controladorCarro.Move(steering, accel, footbrake, handbrake);
     }
 
 	private float formula(float sensor, float limite, float peso){
-		return (limite - sensor) / limite * (peso - 1);
+		return (limite - sensor) / limite * (peso - 31) / 32;
 	}
 
 	/**
@@ -235,6 +234,8 @@ public class Individuo : MonoBehaviour
 		// Resetar pontuação do carro e pontuação da roleta.
 		calculadorPontuacao.pontuacao = 0;
 		this.pontuacaoSelecaoRoleta = 0;
+
+		InvokeRepeating("VerificarSeEstaMovendo", intervaloCheckMovendo * 3, intervaloCheckMovendo);
     }
 
 	/**
@@ -246,6 +247,7 @@ public class Individuo : MonoBehaviour
 		if(!morto)
 		{
 			cameraCinemachine.Priority = 0;
+			CancelInvoke();
 
 			AlgoritmoGenetico alg = FindObjectOfType<AlgoritmoGenetico>();
 			alg.MatarIndividuo(this);

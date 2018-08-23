@@ -86,13 +86,13 @@ public class AlgoritmoGenetico : MonoBehaviour
 		 * em binário unsigned
 		 */
 		new float[qtdGenes][]{
-			new float[] {0, 2},
-			new float[] {0, 2},
-			new float[] {0, 2},
-			new float[] {0, 2},
-			new float[] {0, 2},
-			new float[] {0, 2},
-			new float[] {0, 2}
+			new float[] {0, 63},
+			new float[] {0, 63},
+			new float[] {0, 63},
+			new float[] {0, 63},
+			new float[] {0, 63},
+			new float[] {0, 63},
+			new float[] {0, 63}
 		},
 		new float[qtdGenes][]{
 			new float[] {0, 50},
@@ -388,16 +388,16 @@ public class AlgoritmoGenetico : MonoBehaviour
 			GerarProximaGeracao();
 	}
 
-	//
-	// ─── POSIÇÕES DOS CARROS ────────────────────────────────────────────────────────
-	//
+    //
+    // ─── POSIÇÕES DOS CARROS ────────────────────────────────────────────────────────
+    //
 
-	/**
+    /**
 	 * Verifica em quais posições os carros
 	 * estão (Primeiro lugar, segundo lugar...)
 	 * para dar uma cor específica a eles.
 	 */
-	private void VerificarPosicoesCarro()
+    private void VerificarPosicoesCarro()
     {
         populacao.Sort(Individuo.OrdenarPelaPontuacao);
 
