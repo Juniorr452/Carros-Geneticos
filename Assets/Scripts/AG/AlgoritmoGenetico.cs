@@ -62,9 +62,6 @@ public class AlgoritmoGenetico : MonoBehaviour
 	 */
 	private const int qtdGenes = 7;
 
-	/**
-	 * TODO: Otimizar aqui e na codificação do cromossomo.
-	 */
 	[SerializeField]
 	private float[][][] limitesInfSupCromo = new float[qtdCromossomos][][]
 	{
@@ -321,15 +318,6 @@ public class AlgoritmoGenetico : MonoBehaviour
 			populacao.Add(i);
 	}
 
-	/** 
-	 * TODO: Parar 
-	 * Parar a simulação quando o objetivo for atingido.
-	 */
-	void Parar()
-	{
-
-	}
-
 	//
 	// ─── INSTANCIAMENTO, RESPAWN E MORTE DO CARRO ───────────────────────────────────
 	//
@@ -388,7 +376,7 @@ public class AlgoritmoGenetico : MonoBehaviour
 			GerarProximaGeracao();
 	}
 
-    //
+	//
     // ─── POSIÇÕES DOS CARROS ────────────────────────────────────────────────────────
     //
 

@@ -122,10 +122,6 @@ public class Individuo : MonoBehaviour
 	/**
 	 * Processa os valores dos genes de acordo com
 	 * os sensores e move o carro baseado neles.
-	 * 
-	 * TODO: Pensar melhor numa função de mover
-	 * pro carro.
-	 * 
 	 */
     private void Mover()
     {
