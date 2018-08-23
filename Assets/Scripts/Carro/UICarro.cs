@@ -17,6 +17,7 @@ public class UICarro : MonoBehaviour
 	public Text nomeCarroText;
 	public Text infoCarroText;
 	public Text sensoresCarroText;
+	public Text hvText;
 	
 	private Individuo           individuo;
 	private CarController       carController;
@@ -39,6 +40,7 @@ public class UICarro : MonoBehaviour
 	{
 		StringBuilder sbSensoresCarro = new StringBuilder();
 		StringBuilder sbInfoCarro     = new StringBuilder();
+		StringBuilder sbHV            = new StringBuilder();
 
 		// Texto do sensores carro
 		for(int i = 0; i < sensoresCarro.distanciaSensores.Length; i++)
@@ -58,8 +60,14 @@ public class UICarro : MonoBehaviour
 		sbInfoCarro.Append("Pontuação: ");
 		sbInfoCarro.Append(calculadorPontuacao.pontuacao.ToString("0.0"));
 
+		sbHV.Append("h: ");
+		sbHV.AppendLine(individuo.horizontal.ToString("0.0"));
+		sbHV.Append("v: ");
+		sbHV.AppendLine(individuo.vertical.ToString("0.0"));
+
 		// Atualizar a UI
 		sensoresCarroText.text = sbSensoresCarro.ToString();
 		infoCarroText.text     = sbInfoCarro.ToString();
+		hvText.text              = sbHV.ToString();
 	}
 }

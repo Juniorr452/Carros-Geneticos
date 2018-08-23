@@ -71,6 +71,9 @@ public class Individuo : MonoBehaviour
 	 */
 	private const float intervaloCheckMovendo = 1f;
 
+	public float horizontal;
+	public float vertical;
+
 	// ────────────────────────────────────────────────────────────────────────────────
 
 	// Use this for initialization
@@ -123,8 +126,8 @@ public class Individuo : MonoBehaviour
 	 */
     private void Mover()
     {
-        float horizontal = 0f;
-		float vertical   = 0f;
+        horizontal = 0f;
+		vertical   = 0f;
 
 		int qtdCromossomos = cromossomos.Length;
 		int qtdGenes       = cromossomos[0].genes.Length;
