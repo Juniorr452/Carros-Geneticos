@@ -77,10 +77,10 @@ public class AlgoritmoGenetico : MonoBehaviour
 			new float[] {10, 63} // Velocidade do Carro
 		},
 		/**
-		 * Esses valores serão substraídos por 1.
+		 * Esses valores serão substraídos por 63.
 		 * 
 		 * Não coloquei negativo pq estamos codificando
-		 * em binário unsigned
+		 * em binário unsigned.
 		 */
 		new float[qtdGenes][]{
 			new float[] {0, 63},
