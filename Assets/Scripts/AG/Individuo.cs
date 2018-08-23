@@ -100,7 +100,10 @@ public class Individuo : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		Mover();
+		if(calculadorPontuacao.pontuacao > -1)
+			Mover();
+		else
+			Morrer();
 	}
 
 	/**
