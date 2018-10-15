@@ -22,14 +22,28 @@ public class CalculadorPontuacao : MonoBehaviour
 	 */
 	void Update () 
 	{
-		float sensorEsquerda = sensoresCarro.distanciaSensores[0];
-		float sensorDireita  = sensoresCarro.distanciaSensores[2];
-
-		float diferencaSensores = Mathf.Abs(sensorEsquerda - sensorDireita);
+		float diferencaSensores = getDiferencaSensores();
 		float velocidade        = carController.SignCurrentSpeed;
 
 		if (diferencaSensores < 1) diferencaSensores = 1;
 
 		pontuacao += velocidade * 0.005f / diferencaSensores;
+	}
+
+	float getDiferencaSensores()
+	{
+		float sensorEsquerda = getRayDistance(-transform.right);
+		float sensorDireita  = getRayDistance(transform.right);
+
+		return Mathf.Abs(sensorEsquerda - sensorDireita); 
+	}
+
+	float getRayDistance(Vector3 direcao)
+	{
+		RaycastHit hit;
+		Physics.Raycast(sensoresCarro.offsetRaycast + transform.position, direcao, out hit, 100, sensoresCarro.layerMaskSensor);
+		Debug.DrawLine(sensoresCarro.offsetRaycast + transform.position, hit.point, Color.green, 0);
+
+		return hit.distance;
 	}
 }
