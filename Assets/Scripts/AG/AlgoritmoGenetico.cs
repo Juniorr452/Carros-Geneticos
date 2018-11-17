@@ -120,10 +120,18 @@ public class AlgoritmoGenetico : MonoBehaviour
 		new Color(.764151f, .764151f, .764151f, 1), // Cinza
 	};
 
+	//
+	// ─── ESTATÍSTICA ───────────────────────────────────────────────────────────────────────
+	//
+
+	private List<float> pontuacoesGeracoes;
+
 	// ────────────────────────────────────────────────────────────────────────────────
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
+		pontuacoesGeracoes = new List<float>();
 		inicializarPopulacao();
 	}
 	
@@ -165,6 +173,10 @@ public class AlgoritmoGenetico : MonoBehaviour
 
 	public void GerarProximaGeracao()
 	{	
+		populacao.Sort(Individuo.OrdenarPelaPontuacao);
+
+		capturarEstatistica();
+
 		Selecao();
 		CrossOver();
 		Mutacao(fatorMutacao);
@@ -176,14 +188,21 @@ public class AlgoritmoGenetico : MonoBehaviour
 	}
 
 	/**
+	 * Adicionar o carro com maior pontuação na estatística de pontuação
+	 */
+	void capturarEstatistica()
+	{
+		pontuacoesGeracoes.Add(populacao[0].calcularFitness());
+		Debug.Log(populacao[0].calcularFitness());
+	}
+
+	/**
 	 * Seleção de indivíduos utilizando o método da roleta.
 	 */
     void Selecao()
 	{
 		List<float> porcentagens = new List<float>();
 		float pAnterior = 0;
-
-		populacao.Sort(Individuo.OrdenarPelaPontuacao);
 
 		individuosSelecionados.Clear();
 
